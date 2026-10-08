@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { BsLinkedin } from "react-icons/bs";
 import { FaGithubSquare, FaTwitter } from "react-icons/fa";
-import { HiDownload } from "react-icons/hi";
 import { useSectionInView } from "@/lib/hooks";
 import nachoWebp from "@/public/nacho.webp";
 
@@ -92,24 +91,6 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
       >
         <span>Philosophy: "Success is not assured, failures either".</span>
-      </motion.div>
-
-      <motion.div
-        className="flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium mb-4"
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.1,
-        }}
-      >
-        <a
-          className="group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition borderBlack dark:bg-white/10"
-          href="/cv-nacho-gonzalez-garilleti.pdf"
-          download
-        >
-          Download CV{" "}
-          <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />
-        </a>
       </motion.div>
 
       <motion.div
