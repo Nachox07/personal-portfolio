@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
 	title: "Nacho González-Garilleti | Personal Portfolio",
 	description:
-		"Nacho González-Garilleti is a software engineer with 8 years of experience.",
+		"Nacho González-Garilleti is a software engineer with 9 years of experience.",
 	tags: [
 		"Nacho",
 		"González",
@@ -33,7 +33,7 @@ export const metadata = {
 		url: "https://garilleti.me",
 		title: "Nacho González-Garilleti | Personal Portfolio",
 		description:
-			"Nacho González-Garilleti is a software engineer with 8 years of experience.",
+			"Nacho González-Garilleti is a software engineer with 9 years of experience.",
 		site_name: "Nacho González-Garilleti | Personal Portfolio",
 	},
 };

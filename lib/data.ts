@@ -12,10 +12,52 @@ export const links = [
     hash: "#home",
   },
   {
+    name: "Experience",
+    hash: "#experience",
+  },
+  {
     name: "Projects",
     hash: "#projects",
   },
 ] as const;
+
+type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  description: string;
+};
+
+export const experienceData: readonly Experience[] = [
+  {
+    role: "Technical Lead Engineer",
+    company: "OpenVPN",
+    period: "Nov 2025 — Present",
+    description:
+      "Security and AI-agent work on a cloud-delivered secure-networking platform: per-customer certificate authorities, device identity, OAuth2/OIDC access, and LangGraph agents on Vertex AI with human approval before they act.",
+  },
+  {
+    role: "Technical Lead Engineer",
+    company: "Cognigy (acquired by NICE)",
+    period: "Sep 2021 — Nov 2025",
+    description:
+      "Led Live Agent and AI Copilot, mentoring 7 engineers on products that served Lufthansa's contact centre at 13k+ conversations a day.",
+  },
+  {
+    role: "Senior Software Developer",
+    company: "William Hill",
+    period: "Mar 2020 — Sep 2021",
+    description:
+      "Sportsbook backend microservices on Node.js, TypeScript, Kubernetes and Kafka, plus the React front end that consumed them.",
+  },
+  {
+    role: "Senior Software Developer",
+    company: "Addison Global (MoPlay)",
+    period: "Jun 2019 — Mar 2020",
+    description:
+      "Shipped the MoPlay React Native app to both stores and built the casino website in three months with React, RxJS and xState.",
+  },
+];
 
 type Project = {
   title: string;
