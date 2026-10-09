@@ -34,7 +34,7 @@ export const experienceData: readonly Experience[] = [
     company: "OpenVPN",
     period: "Nov 2025 — Present",
     description:
-      "LangGraph agents on Vertex AI in customer beta: tool calling against live infrastructure, retrieval, and approval bound to the tool, its arguments, the tenant and the user. Also own the platform security design - per-customer certificate authorities, device identity and OAuth2/OIDC access - and lead QA and DevOps.",
+      "LangGraph agents on Vertex AI in customer beta: tool calling against live infrastructure, retrieval, and approval bound to the tool, its arguments, the tenant and the user. Also own the platform security design - per-customer certificate authorities, device identity and OAuth2/OIDC access - and the decision records behind how the organisation reviews code with AI.",
   },
   {
     role: "Technical Lead Engineer",
