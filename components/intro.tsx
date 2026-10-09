@@ -67,8 +67,9 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
       >
         <span className="font-semibold">
-          Software Engineer with over 9 years of experience. I love to write
-          code and design software for people and companies.
+          Software engineer, 9 years in production. I build AI agents that are
+          allowed to act on real systems, and I help engineering teams get
+          faster with AI.
         </span>
       </motion.div>
 
