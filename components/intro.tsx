@@ -54,7 +54,7 @@ export default function Intro() {
       </div>
 
       <motion.h1
-        className="mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4xl"
+        className="mb-6 mt-6 px-4 text-3xl font-bold !leading-[1.2] sm:text-5xl"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -62,18 +62,18 @@ export default function Intro() {
       </motion.h1>
 
       <motion.div
-        className="mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4l"
+        className="mb-6 px-4 mx-auto max-w-[38rem] text-xl font-medium !leading-[1.5] text-gray-800 sm:text-2xl dark:text-white/90"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className="font-bold">
+        <span className="font-semibold">
           Software Engineer with over 9 years of experience. I love to write
           code and design software for people and companies.
         </span>
       </motion.div>
 
       <motion.div
-        className="mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4l"
+        className="mb-6 px-4 mx-auto max-w-[38rem] text-base !leading-[1.7] text-gray-700 sm:text-lg dark:text-white/70"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -86,11 +86,13 @@ export default function Intro() {
       </motion.div>
 
       <motion.div
-        className="mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4l"
+        className="mb-6 px-4 mx-auto max-w-[38rem] text-base !leading-[1.7] text-gray-700 sm:text-lg dark:text-white/70"
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span>Philosophy: "Success is not assured, failures either".</span>
+        <span className="italic text-gray-500 dark:text-white/50">
+          "Success is not assured, failures either."
+        </span>
       </motion.div>
 
       <motion.div
