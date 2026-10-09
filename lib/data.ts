@@ -34,14 +34,14 @@ export const experienceData: readonly Experience[] = [
     company: "OpenVPN",
     period: "Nov 2025 — Present",
     description:
-      "Security and AI-agent work on a cloud-delivered secure-networking platform: per-customer certificate authorities, device identity, OAuth2/OIDC access, and LangGraph agents on Vertex AI with human approval before they act.",
+      "LangGraph agents on Vertex AI in customer beta: tool calling against live infrastructure, retrieval, and approval bound to the tool, its arguments, the tenant and the user. Also own the platform security design - per-customer certificate authorities, device identity and OAuth2/OIDC access - and lead QA and DevOps.",
   },
   {
     role: "Technical Lead Engineer",
     company: "Cognigy (acquired by NICE)",
     period: "Sep 2021 — Nov 2025",
     description:
-      "Led Live Agent and AI Copilot, mentoring 7 engineers on products that served Lufthansa's contact centre at 13k+ conversations a day.",
+      "Led AI Copilot and Live Agent, turning live messages and call transcripts into real-time guidance for contact-centre agents. Mentored 7 engineers on products serving Lufthansa at 13k+ conversations a day.",
   },
   {
     role: "Senior Software Developer",

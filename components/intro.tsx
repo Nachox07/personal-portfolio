@@ -67,8 +67,9 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
       >
         <span className="font-semibold">
-          Software Engineer with over 9 years of experience. I love to write
-          code and design software for people and companies.
+          Software engineer, 9 years in production. I build AI agents that are
+          allowed to act on real systems, and I help engineering teams get
+          faster with AI.
         </span>
       </motion.div>
 
@@ -78,10 +79,11 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
       >
         <span>
-          Currently technical lead at OpenVPN, working on secure networking and
-          AI agents: per-customer certificate authorities, device identity and
-          OAuth2/OIDC access, plus LangGraph agents on Vertex AI with human
-          approval before they act.
+          Currently technical lead at OpenVPN. I build LangGraph agents on
+          Vertex AI with tool calling, retrieval and a human approval step
+          before anything changes &mdash; on a secure-networking platform where I
+          also own per-customer certificate authorities, device identity and
+          OAuth2/OIDC access.
         </span>
       </motion.div>
 
