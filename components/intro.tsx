@@ -68,8 +68,7 @@ export default function Intro() {
       >
         <span className="font-semibold">
           Software engineer, 9 years in production. I build AI agents that are
-          allowed to act on real systems, and I help engineering teams get
-          faster with AI.
+          allowed to act on real systems.
         </span>
       </motion.div>
 
