@@ -39,7 +39,7 @@ export const experienceData: readonly Experience[] = [
   {
     role: "Technical Lead Engineer",
     company: "Cognigy (acquired by NICE)",
-    period: "Sep 2021 — Nov 2025",
+    period: "Sep 2021 — Oct 2025",
     description:
       "Led AI Copilot and Live Agent, turning live messages and call transcripts into real-time guidance for contact-centre agents. Mentored 7 engineers on products serving Lufthansa at 13k+ conversations a day.",
   },
@@ -72,16 +72,16 @@ export const projectsData: readonly Project[] = [
   {
     title: "Tardeo.ai",
     description:
-      "A platform that I created to help people find the best time to meet with their friends and family using AI",
+      "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. A Node service reads what venues post, uses Claude to pull the events out, and publishes them to the site, Telegram channels and Instagram",
     tags: [
-      "React",
-      "Next.js",
-      "Tailwind",
       "TypeScript",
-      "Langchain",
-      "LLMs",
-      "OpenAI",
-      "Anthropic",
+      "Node.js",
+      "Puppeteer",
+      "Anthropic Claude",
+      "SQLite",
+      "Telegram Bot API",
+      "Astro",
+      "Cloudflare",
     ],
     imageUrl: tardeo,
     url: "https://tardeo.ai",
@@ -89,7 +89,7 @@ export const projectsData: readonly Project[] = [
   {
     title: "Movie Recommender Alexa Skill",
     description:
-      "An Alexa skill that I made for the Amazon Developer Promotion. Thanks to my skills, I won several Echo devices",
+      "An Alexa skill I built for the Amazon Developer Promotion, which won several Echo devices",
     tags: ["TypeScript", "Axios", "AWS Lambda"],
     imageUrl: alexaSkill,
     url: "https://www.amazon.es/Garilleti-Software-Recomendador-de-pel%C3%ADculas/dp/B081F2HJGS",
@@ -97,7 +97,7 @@ export const projectsData: readonly Project[] = [
   {
     title: "Whisperland iOS & Android App",
     description:
-      "A social network that revolutionizes the way you discover and connect with your surroundings",
+      "The first version of Tardeo: a location-based social app for discovering what is happening around you. Shipped to both stores, and retired when the product became Tardeo.ai",
     tags: [
       "React Native",
       "Nest.js",
@@ -109,13 +109,12 @@ export const projectsData: readonly Project[] = [
       "Redis",
     ],
     imageUrl: whisperland,
-    url: "https://whisper.land",
     discontinued: true,
   },
   {
     title: "Mapayuda for Volunteering",
     description:
-      "I developed a platform to help people in need, to volunteer and live adventures around the world",
+      "A platform connecting volunteers with people and projects that need help, anywhere in the world",
     tags: ["PHP", "JQuery", "AWS", "MySQL", "Bootstrap"],
     imageUrl: mapayuda,
     url: "https://mapayuda.org",
@@ -123,7 +122,7 @@ export const projectsData: readonly Project[] = [
   {
     title: "Dirlin Bookmarks Manager",
     description:
-      "A platform which I created to save your favorite links in the cloud. Recommended comparing with other users to offer a personalized experience",
+      "A bookmark manager that suggested links based on what similar users had saved",
     tags: ["PHP", "JQuery", "AWS", "MySQL", "Bootstrap"],
     imageUrl: dirlin,
     discontinued: true,
@@ -131,7 +130,7 @@ export const projectsData: readonly Project[] = [
   {
     title: "Que Aprendemos Hoy",
     description:
-      "I was webmaster of the website for a few years. I was in charge of developing and maintaining the Spanish leader crowd learning platform.",
+      "I was webmaster for a few years, developing and maintaining one of the largest Spanish-language crowd-learning platforms.",
     tags: ["PHP", "Wordpress", "AWS", "MySQL"],
     imageUrl: qah,
     discontinued: true,
