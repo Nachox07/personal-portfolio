@@ -41,7 +41,7 @@ export const experienceData: readonly Experience[] = [
     company: "Cognigy (acquired by NICE)",
     period: "Sep 2021 — Oct 2025",
     description:
-      "Led AI Copilot and Live Agent, turning live messages and call transcripts into real-time guidance for contact-centre agents. Mentored 7 engineers on products serving Lufthansa at 13k+ conversations a day.",
+      "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me, turning live messages and call transcripts into real-time guidance for contact-centre agents. The products served Lufthansa at 13k+ conversations a day.",
   },
   {
     role: "Senior Software Developer",
