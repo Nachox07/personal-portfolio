@@ -5,6 +5,7 @@ import mapayuda from "@/public/mapayuda.jpg";
 import whisperland from "@/public/whisperland.webp";
 import qah from "@/public/qah.jpg";
 import tardeo from "@/public/tardeo.png";
+import extractionEvals from "@/public/extraction-evals.png";
 
 export const links = [
   {
@@ -85,6 +86,14 @@ export const projectsData: readonly Project[] = [
     ],
     imageUrl: tardeo,
     url: "https://tardeo.ai",
+  },
+  {
+    title: "Extraction evals",
+    description:
+      "How I measure prompt changes on Tardeo's extraction pipeline: a hit rule frozen before scoring, misses and false alarms counted apart, a human review of every disagreement, and a held-out check where the gain did not replicate",
+    tags: ["TypeScript", "LLM evaluation", "Vitest", "Anthropic Claude"],
+    imageUrl: extractionEvals,
+    url: "https://github.com/Nachox07/extraction-evals",
   },
   {
     title: "Movie Recommender Alexa Skill",
