@@ -42,7 +42,7 @@ export const experienceData: readonly Experience[] = [
     company: "Cognigy (acquired by NICE)",
     period: "Sep 2021 — Oct 2025",
     description:
-      "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me, turning live messages and call transcripts into real-time guidance for contact-centre agents. The products served Lufthansa at 13k+ conversations a day.",
+      "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me, turning live messages and call transcripts into real-time guidance for contact-centre agents. The products served Lufthansa at 13k+ conversations a day. I also owned the integrations that hand a conversation from the AI agent to human agents and back, with RingCentral Engage, Salesforce, Genesys and others.",
   },
   {
     role: "Senior Software Developer",
