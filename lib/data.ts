@@ -6,6 +6,7 @@ import whisperland from "@/public/whisperland.webp";
 import qah from "@/public/qah.jpg";
 import tardeo from "@/public/tardeo.png";
 import extractionEvals from "@/public/extraction-evals.png";
+import daylit from "@/public/daylit.webp";
 
 export const links = [
   {
@@ -94,6 +95,14 @@ export const projectsData: readonly Project[] = [
     tags: ["TypeScript", "LLM evaluation", "Vitest", "Anthropic Claude"],
     imageUrl: extractionEvals,
     url: "https://github.com/Nachox07/extraction-evals",
+  },
+  {
+    title: "Daylit",
+    description:
+      "A macOS menu-bar app and Windows tray app that sets external monitor brightness from the sun's height, and from a window blind and room lights through Home Assistant",
+    tags: ["Swift", "SwiftUI", "WPF", ".NET", "Home Assistant"],
+    imageUrl: daylit,
+    url: "https://github.com/Nachox07/daylit",
   },
   {
     title: "Movie Recommender Alexa Skill",
