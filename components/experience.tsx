@@ -1,43 +1,104 @@
-"use client";
-
 import React from "react";
-import { motion } from "framer-motion";
 import SectionHeading from "./section-heading";
+import InViewSection from "./in-view-section";
 import { experienceData } from "@/lib/data";
-import { useSectionInView } from "@/lib/hooks";
+import { parsePeriod } from "@/lib/timeline";
 
 export default function Experience() {
-	const { ref } = useSectionInView("Experience", 0.5);
+	// Rendered at build time, so the "Present" bar reaches the last deploy.
+	const now = new Date();
+	const spans = experienceData.map((item) => parsePeriod(item.period, now));
+	const axisStart = Math.floor(Math.min(...spans.map((s) => s.start)) / 12) * 12;
+	const axisEnd = Math.max(...spans.map((s) => s.end));
+	const total = axisEnd - axisStart;
+	const pct = (month: number) => ((month - axisStart) / total) * 100;
+
+	const years: number[] = [];
+	for (let y = axisStart / 12; y * 12 < axisEnd; y++) years.push(y);
 
 	return (
-		<section
-			ref={ref}
+		<InViewSection
+			name="Experience"
 			id="experience"
-			className="scroll-mt-28 mb-28 w-full max-w-[42rem]"
+			labelledBy="experience-title"
+			className="scroll-mt-20 pb-24 sm:pb-32"
 		>
-			<SectionHeading>My experience</SectionHeading>
-			<ol className="flex flex-col gap-6">
-				{experienceData.map((item, index) => (
-					<motion.li
-						key={index}
-						className="bg-gray-100 border border-black/5 rounded-lg px-5 py-5 sm:px-8 sm:py-6 dark:bg-white/10 dark:text-white"
-						initial={{ opacity: 0, y: 40 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.05 * index }}
-					>
-						<h3 className="text-xl font-semibold">{item.role}</h3>
-						<p className="text-gray-700 dark:text-white/70">
-							<span className="font-medium">{item.company}</span>
-							<span className="mx-2 text-gray-400 dark:text-white/40">·</span>
-							<span className="text-sm">{item.period}</span>
-						</p>
-						<p className="mt-3 leading-relaxed text-gray-700 dark:text-white/70">
-							{item.description}
-						</p>
-					</motion.li>
-				))}
+			<SectionHeading index="01" id="experience-title">
+				Experience
+			</SectionHeading>
+
+			<div className="grid grid-cols-1 sm:grid-cols-[17rem_1fr] sm:gap-x-8">
+				{/* Year axis */}
+				<div className="hidden sm:block" />
+				<div aria-hidden className="relative mb-2 ml-6 h-5 font-mono text-[0.68rem] text-faint sm:ml-0">
+					{years.map((y, i) => (
+						<span
+							key={y}
+							className={i % 2 ? "absolute hidden sm:inline" : "absolute"}
+							style={{ left: `${pct(y * 12)}%` }}
+						>
+							<span className="absolute -bottom-2 left-0 h-1.5 w-px bg-line" />
+							{`'${String(y).slice(2)}`}
+						</span>
+					))}
+				</div>
+			</div>
+
+			<ol className="border-t border-line">
+				{experienceData.map((item, i) => {
+					const span = spans[i];
+					return (
+						<li key={item.company} className="border-b border-line">
+							<details open={i < 2} className="group">
+								<summary className="grid cursor-pointer list-none grid-cols-1 gap-x-8 gap-y-3 py-5 sm:grid-cols-[17rem_1fr] sm:items-center [&::-webkit-details-marker]:hidden">
+									<div className="flex gap-3">
+										<span
+											aria-hidden
+											className="w-3 shrink-0 pt-px font-mono text-sm leading-6 text-faint group-hover:text-accent"
+										>
+											<span className="group-open:hidden">+</span>
+											<span className="hidden group-open:inline">−</span>
+										</span>
+										<div>
+											<h3 className="font-semibold leading-snug">
+												{item.company}
+											</h3>
+											<p className="text-sm text-muted">{item.role}</p>
+											<p className="mt-1 font-mono text-xs text-faint">
+												{item.period}
+											</p>
+										</div>
+									</div>
+
+									<div aria-hidden className="relative ml-6 h-2 sm:ml-0">
+										<div className="absolute inset-x-0 top-1/2 h-px bg-line" />
+										<div
+											className={
+												span.current
+													? "absolute top-0 h-2 rounded-sm bg-accent"
+													: "absolute top-0 h-2 rounded-sm bg-bar transition-colors group-hover:bg-faint"
+											}
+											style={{
+												left: `${pct(span.start)}%`,
+												width: `${pct(span.end) - pct(span.start)}%`,
+											}}
+										/>
+										{span.current && (
+											<span
+												className="live-dot absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent"
+											/>
+										)}
+									</div>
+								</summary>
+
+								<p className="max-w-2xl pb-6 pl-6 leading-relaxed text-muted sm:ml-[19rem] sm:pl-0">
+									{item.description}
+								</p>
+							</details>
+						</li>
+					);
+				})}
 			</ol>
-		</section>
+		</InViewSection>
 	);
 }
