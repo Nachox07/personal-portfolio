@@ -2,14 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  --line-color: #e5e7eb;
+/* Colour tokens, as "r g b" so Tailwind can add alpha. */
+:root {
+  --bg: 246 247 245;
+  --surface: 255 255 255;
+  --ink: 11 15 16;
+  --muted: 63 70 72;
+  --faint: 92 101 104;
+  --line: 222 225 221;
+  --accent: 15 118 110;
+  --accent-soft: 204 240 233;
+  --bar: 200 205 202;
+  color-scheme: light;
 }
 
 html.dark {
-  --line-color: rgba(255, 255, 255, 0.2);
+  --bg: 11 15 16;
+  --surface: 18 24 26;
+  --ink: 232 236 235;
+  --muted: 176 186 184;
+  --faint: 132 145 143;
+  --line: 36 45 47;
+  --accent: 94 234 212;
+  --accent-soft: 16 52 49;
+  --bar: 52 63 65;
+  color-scheme: dark;
 }
 
-.borderBlack {
-  @apply border border-black/10;
+@layer base {
+  body {
+    @apply bg-bg text-ink antialiased;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.25);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .mono-label {
+    @apply font-mono text-xs uppercase tracking-[0.12em] text-faint;
+  }
+}
+
+/* A quiet dot grid behind the hero, like a trace viewer's canvas. */
+.trace-grid {
+  background-image: radial-gradient(
+    rgb(var(--line)) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black 40%, transparent);
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(var(--accent) / 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgb(var(--accent) / 0);
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.rise {
+  animation: rise 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .live-dot,
+  .rise {
+    animation: none;
+  }
 }
