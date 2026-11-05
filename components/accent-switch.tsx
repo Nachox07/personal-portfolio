@@ -8,7 +8,7 @@ function currentAccent(): Accent {
 	return a && accents.includes(a) ? a : "teal";
 }
 
-// Picks another accent at random from the checked set and remembers it.
+// Picks another colour theme at random from the checked set and remembers it.
 export default function AccentSwitch() {
 	const [announce, setAnnounce] = useState("");
 
@@ -21,7 +21,7 @@ export default function AccentSwitch() {
 		try {
 			localStorage.setItem(ACCENT_KEY, next);
 		} catch {}
-		setAnnounce(`Accent colour: ${next}`);
+		setAnnounce(`Colour theme: ${next}`);
 	};
 
 	return (
@@ -29,14 +29,15 @@ export default function AccentSwitch() {
 			<button
 				type="button"
 				onClick={shuffle}
-				aria-label="Shuffle accent colour"
-				title="Shuffle accent colour"
-				className="group flex h-9 w-9 items-center justify-center rounded-md border border-line transition-colors hover:border-faint"
+				aria-label="Shuffle colour theme"
+				title="Shuffle colour theme"
+				className="group flex h-9 items-center gap-2 rounded-md border border-line px-2.5 font-mono text-xs uppercase tracking-[0.08em] text-muted transition-colors hover:border-accent hover:text-ink"
 			>
 				<span
 					aria-hidden
-					className="h-3 w-3 rounded-full bg-accent transition-transform group-hover:scale-125 group-active:rotate-90 motion-reduce:transition-none"
+					className="h-2.5 w-2.5 rounded-full bg-accent transition-transform group-hover:scale-125 group-active:scale-90 motion-reduce:transition-none"
 				/>
+				Shuffle
 			</button>
 			<span role="status" aria-live="polite" className="sr-only">
 				{announce}
