@@ -162,10 +162,10 @@ export const projectsData: readonly Project[] = [
   {
     title: "Movie Recommender Alexa Skill",
     description:
-      "An Alexa skill I built for the Amazon Developer Promotion, which won several Echo devices",
+      "An Alexa skill I built for the Amazon Developer Promotion, which won several Echo devices. It reached thousands of monthly users",
     tags: ["TypeScript", "Axios", "AWS Lambda"],
     imageUrl: alexaSkill,
-    url: "https://www.amazon.es/Garilleti-Software-Recomendador-de-pel%C3%ADculas/dp/B081F2HJGS",
+    discontinued: true,
   },
   {
     title: "Whisperland iOS & Android App",
