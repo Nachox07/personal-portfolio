@@ -38,6 +38,15 @@ test("no sideways scroll", async ({ page }) => {
 	expect(overflow).toBeLessThanOrEqual(0);
 });
 
+test("header fits on a 320px phone", async ({ page }) => {
+	await page.setViewportSize({ width: 320, height: 700 });
+	await settle(page);
+	const overflow = await page.evaluate(
+		() => document.documentElement.scrollWidth - window.innerWidth
+	);
+	expect(overflow).toBeLessThanOrEqual(0);
+});
+
 test("header shows the site name and fits", async ({ page }) => {
 	await settle(page);
 	const brand = page.getByRole("link", { name: "garilleti.me", exact: true });
