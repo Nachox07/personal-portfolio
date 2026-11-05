@@ -13,8 +13,8 @@ const mono = JetBrains_Mono({
 	weight: ["400", "500"],
 });
 
-// Set the theme class before first paint, so a dark-mode visitor never sees a light flash.
-const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}`;
+// Set the theme class and saved accent before first paint, so nothing flashes.
+const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");var a=localStorage.getItem("accent");if(a&&a!=="teal")document.documentElement.dataset.accent=a}catch(e){}`;
 
 export const metadata = {
 	title: "Nacho González-Garilleti | Personal Portfolio",
