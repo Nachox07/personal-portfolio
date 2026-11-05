@@ -26,7 +26,7 @@ export default function Intro() {
 			ref={ref}
 			id="home"
 			aria-label="Introduction"
-			className="relative scroll-mt-[100rem] pb-24 pt-16 sm:pb-32 sm:pt-24"
+			className="relative scroll-mt-[100rem] pb-24 pt-8 sm:pb-32 sm:pt-24"
 		>
 			<div
 				aria-hidden
@@ -42,7 +42,7 @@ export default function Intro() {
 				<span>{current.period}</span>
 			</p>
 
-			<div className="mt-8 flex flex-col-reverse gap-8 sm:flex-row sm:items-end sm:justify-between">
+			<div className="mt-6 flex flex-col-reverse gap-6 sm:mt-8 sm:flex-row sm:gap-8 sm:items-end sm:justify-between">
 				<h1
 					className="rise text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-7xl"
 					style={{ animationDelay: "60ms" }}
