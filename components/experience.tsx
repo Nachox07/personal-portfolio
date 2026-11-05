@@ -91,9 +91,45 @@ export default function Experience() {
 									</div>
 								</summary>
 
-								<p className="max-w-2xl pb-6 pl-6 leading-relaxed text-muted sm:ml-[19rem] sm:pl-0">
-									{item.description}
-								</p>
+								<div className="max-w-2xl pb-7 pl-6 sm:ml-[19rem] sm:pl-0">
+									<p className="leading-relaxed text-muted">{item.description}</p>
+
+									{item.highlights && (
+										// Child spans: what the role produced, hung off the parent bar.
+										<ul className="mt-5 space-y-4 border-l border-line pl-5">
+											{item.highlights.map((h) => (
+												<li key={h.label} className="relative">
+													<span
+														aria-hidden
+														className="absolute -left-5 top-[0.55rem] h-px w-3 bg-line"
+													/>
+													<p className="font-mono text-xs text-accent">{h.label}</p>
+													<p className="mt-1 text-sm leading-relaxed text-muted">
+														{h.detail}
+													</p>
+												</li>
+											))}
+										</ul>
+									)}
+
+									{item.customers && (
+										<div className="mt-6">
+											<p className="mono-label">Enterprise customers I worked with directly</p>
+											<ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-ink">
+												{item.customers.map((c, ci) => (
+													<li key={c}>
+														{c}
+														{ci < item.customers!.length - 1 && (
+															<span aria-hidden className="ml-3 text-faint">
+																·
+															</span>
+														)}
+													</li>
+												))}
+											</ul>
+										</div>
+									)}
+								</div>
 							</details>
 						</li>
 					);

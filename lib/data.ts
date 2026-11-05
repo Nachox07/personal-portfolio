@@ -21,13 +21,26 @@ export const links = [
     name: "Projects",
     hash: "#projects",
   },
+  {
+    name: "Contact",
+    hash: "#contact",
+  },
 ] as const;
+
+export const contact = {
+  email: "hello@garilleti.me",
+  linkedin: "https://www.linkedin.com/in/nachogonzalezgarilleti/",
+  pitch:
+    "Open to staff, lead and founding-engineer roles: building AI agents in production, and the team around them. Permanent or contract.",
+} as const;
 
 type Experience = {
   role: string;
   company: string;
   period: string;
   description: string;
+  highlights?: readonly { label: string; detail: string }[];
+  customers?: readonly string[];
 };
 
 export const experienceData: readonly Experience[] = [
@@ -44,6 +57,41 @@ export const experienceData: readonly Experience[] = [
     period: "Sep 2021 — Oct 2025",
     description:
       "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me, turning live messages and call transcripts into real-time guidance for contact-centre agents. I also owned the integrations that hand a conversation from the AI agent to human agents and back, with RingCentral Engage, Salesforce, Genesys and others.",
+    highlights: [
+      {
+        label: "Live Agent · Lufthansa",
+        detail:
+          "Redesigned the bot-to-human handover so it held up through enterprise contact centres' busiest peaks.",
+      },
+      {
+        label: "AI Copilot",
+        detail:
+          "Sentiment analysis and real-time guidance for contact-centre agents, from live messages and call transcripts.",
+      },
+      {
+        label: "Real-time path",
+        detail:
+          "Moved websockets from broadcasting every event to all agents to per-subscription delivery, and added PostgreSQL read replicas with automatic failover on Kubernetes.",
+      },
+    ],
+    customers: [
+      "Lufthansa",
+      "Bosch",
+      "Allianz",
+      "DHL",
+      "Lidl",
+      "Bayer",
+      "E.ON",
+      "Škoda",
+      "Vueling",
+      "Frontier Airlines",
+      "ARAG",
+      "Fabletics",
+      "Mister Spex",
+      "Salzburg AG",
+      "Direct Travel",
+      "Nuuday",
+    ],
   },
   {
     role: "Senior Software Developer",
