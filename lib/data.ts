@@ -59,6 +59,13 @@ export const experienceData: readonly Experience[] = [
     description:
       "Shipped the MoPlay React Native app to both stores and built the casino website in three months with React, RxJS and xState.",
   },
+  {
+    role: "Senior Software Developer",
+    company: "Ciklum",
+    period: "Dec 2017 — Jun 2019",
+    description:
+      "Front-end developer for Addison Global, the creators of MoPlay, on Ciklum's team. Started as a middle front-end developer and was promoted to senior in December 2018.",
+  },
 ];
 
 type Project = {
