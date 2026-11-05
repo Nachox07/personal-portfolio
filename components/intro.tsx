@@ -4,13 +4,13 @@ import Image from "next/image";
 import { BsLinkedin } from "react-icons/bs";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 import { useSectionInView } from "@/lib/hooks";
-import { experienceData } from "@/lib/data";
+import { contact, experienceData } from "@/lib/data";
 import nachoWebp from "@/public/nacho.webp";
 
 const socials = [
 	{
 		label: "LinkedIn",
-		href: "https://www.linkedin.com/in/nachogonzalezgarilleti/",
+		href: contact.linkedin,
 		icon: BsLinkedin,
 	},
 	{ label: "GitHub", href: "https://github.com/Nachox07/", icon: FaGithub },
@@ -83,8 +83,22 @@ export default function Intro() {
 				</div>
 			</div>
 
+			<div
+				className="rise mt-10 flex flex-col gap-4 border-l-2 border-accent pl-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8"
+				style={{ animationDelay: "160ms" }}
+			>
+				<p className="max-w-xl text-sm leading-relaxed text-ink">{contact.pitch}</p>
+				<a
+					href={`mailto:${contact.email}`}
+					className="inline-flex shrink-0 items-center gap-2 self-start rounded-md bg-ink px-4 py-2.5 font-mono text-xs text-bg transition-opacity hover:opacity-85 sm:self-auto"
+				>
+					{contact.email}
+					<span aria-hidden>→</span>
+				</a>
+			</div>
+
 			<ul
-				className="rise mt-10 flex flex-wrap gap-2"
+				className="rise mt-6 flex flex-wrap gap-2"
 				style={{ animationDelay: "180ms" }}
 			>
 				{socials.map(({ label, href, icon: Icon }) => (
