@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { links } from "@/lib/data";
 import { useActiveSectionContext } from "@/context/active-section-context";
 import ThemeSwitch from "./theme-switch";
+import AccentSwitch from "./accent-switch";
 
 export default function Header() {
 	const { activeSection, setActiveSection, setTimeOfLastClick } =
@@ -66,6 +67,7 @@ export default function Header() {
 								);
 							})}
 					</ul>
+					<AccentSwitch />
 					<ThemeSwitch />
 				</div>
 			</nav>
