@@ -37,11 +37,8 @@ export default function Header() {
 							.map((link) => {
 								const active = activeSection === link.name;
 								return (
-									// Phones keep only Contact: the sections are one scroll away.
-									<li
-										key={link.hash}
-										className={link.name === "Contact" ? undefined : "hidden sm:block"}
-									>
+									// Phones skip the section links: the email button is on the first screen.
+									<li key={link.hash} className="hidden sm:block">
 										<Link
 											href={link.hash}
 											aria-current={active ? "location" : undefined}

@@ -29,15 +29,22 @@ html.dark {
   color-scheme: dark;
 }
 
-/* Accent options for the shuffle button (teal is the default above). */
-html[data-accent="amber"] { --accent: 140 84 6; }
-html[data-accent="cobalt"] { --accent: 29 78 216; }
-html[data-accent="rose"] { --accent: 190 18 60; }
-html[data-accent="violet"] { --accent: 109 40 217; }
-html.dark[data-accent="amber"] { --accent: 252 211 77; }
-html.dark[data-accent="cobalt"] { --accent: 147 197 253; }
-html.dark[data-accent="rose"] { --accent: 253 164 175; }
-html.dark[data-accent="violet"] { --accent: 196 181 253; }
+/* Colour themes for the Shuffle button (teal is the default above). Each
+   tints the background, lines and bars and sets its own accent. The contrast
+   test in tests/interactions.spec.ts checks every text colour on each one. */
+html[data-accent="amber"] { --bg: 249 245 236; --surface: 255 252 245; --line: 232 223 205; --bar: 214 202 178; --accent: 140 84 6; }
+html[data-accent="cobalt"] { --bg: 242 245 250; --surface: 255 255 255; --line: 220 227 238; --bar: 196 207 224; --accent: 29 78 216; }
+html[data-accent="rose"] { --bg: 250 243 244; --surface: 255 255 255; --line: 238 222 225; --bar: 222 199 204; --accent: 190 18 60; }
+html[data-accent="violet"] { --bg: 246 243 251; --surface: 255 255 255; --line: 228 222 240; --bar: 207 198 228; --accent: 109 40 217; }
+html.dark[data-accent="amber"] { --bg: 18 15 10; --surface: 28 23 15; --line: 50 42 30; --bar: 72 62 44; --accent: 252 211 77; }
+html.dark[data-accent="cobalt"] { --bg: 10 14 26; --surface: 16 22 38; --line: 34 44 66; --bar: 52 64 92; --accent: 147 197 253; }
+html.dark[data-accent="rose"] { --bg: 22 11 15; --surface: 32 17 22; --line: 58 34 42; --bar: 82 52 62; --accent: 253 164 175; }
+html.dark[data-accent="violet"] { --bg: 16 12 26; --surface: 24 19 38; --line: 46 38 68; --bar: 68 58 98; --accent: 196 181 253; }
+
+/* Fade between themes rather than snapping. */
+body {
+  transition: background-color 0.3s ease;
+}
 
 @layer base {
   body {
@@ -120,6 +127,9 @@ html.dark[data-accent="violet"] { --accent: 196 181 253; }
   .live-dot,
   .rise {
     animation: none;
+  }
+  body {
+    transition: none;
   }
   .portrait img {
     transition: none;
