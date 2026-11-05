@@ -26,11 +26,11 @@ export default function Header() {
 					}}
 				>
 					<span aria-hidden className="h-2 w-2 rounded-full bg-accent" />
-					garilleti.me
+					<span className="sr-only sm:not-sr-only">garilleti.me</span>
 				</Link>
 
 				<div className="flex items-center gap-1 sm:gap-3">
-					<ul className="flex items-center font-mono text-xs uppercase tracking-[0.12em]">
+					<ul className="flex items-center font-mono text-[0.7rem] uppercase tracking-[0.06em] sm:text-xs sm:tracking-[0.12em]">
 						{links
 							.filter((link) => link.name !== "Home")
 							.map((link) => {
@@ -41,7 +41,7 @@ export default function Header() {
 											href={link.hash}
 											aria-current={active ? "location" : undefined}
 											className={clsx(
-												"relative block px-2 py-2 transition-colors sm:px-3",
+												"relative block px-1.5 py-2 transition-colors sm:px-3",
 												active ? "text-ink" : "text-faint hover:text-ink"
 											)}
 											onClick={() => {
@@ -53,7 +53,7 @@ export default function Header() {
 											<span
 												aria-hidden
 												className={clsx(
-													"absolute inset-x-2 -bottom-[13px] h-px bg-accent transition-opacity sm:inset-x-3",
+													"absolute inset-x-1.5 -bottom-[13px] h-px bg-accent transition-opacity sm:inset-x-3",
 													active ? "opacity-100" : "opacity-0"
 												)}
 											/>
