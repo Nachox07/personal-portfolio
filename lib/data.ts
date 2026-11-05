@@ -163,7 +163,7 @@ export const projectsData: readonly Project[] = [
     title: "Movie Recommender Alexa Skill",
     description:
       "An Alexa skill I built for the Amazon Developer Promotion, which won several Echo devices. Built before LLMs on Alexa's own language understanding: a custom intent with a genre slot, sample phrases, Alexa asking for the genre when it was missing, and screens for Echo Show. It reached thousands of monthly users",
-    tags: ["TypeScript", "Axios", "AWS Lambda"],
+    tags: ["JavaScript", "Node.js", "Alexa Skills Kit", "AWS Lambda", "Cheerio"],
     imageUrl: alexaSkill,
     discontinued: true,
   },
