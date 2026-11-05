@@ -99,6 +99,17 @@ export default function Experience() {
 					);
 				})}
 			</ol>
+			<p className="mt-5 font-mono text-xs text-faint">
+				<a
+					href="https://www.linkedin.com/in/nachogonzalezgarilleti/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="transition-colors hover:text-accent"
+				>
+					Full history on LinkedIn <span aria-hidden>↗</span>
+					<span className="sr-only">(opens in a new tab)</span>
+				</a>
+			</p>
 		</InViewSection>
 	);
 }
