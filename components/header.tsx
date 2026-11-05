@@ -1,63 +1,70 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { links } from "@/lib/data";
 import Link from "next/link";
 import clsx from "clsx";
+import { links } from "@/lib/data";
 import { useActiveSectionContext } from "@/context/active-section-context";
+import ThemeSwitch from "./theme-switch";
 
 export default function Header() {
 	const { activeSection, setActiveSection, setTimeOfLastClick } =
 		useActiveSectionContext();
 
 	return (
-		<header className="z-[999] relative">
-			<motion.nav
-				className="fixed top-0 left-1/2 -translate-x-1/2 w-full rounded-none border border-white border-opacity-40 bg-white bg-opacity-80 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] sm:top-6 sm:w-auto sm:rounded-full dark:bg-gray-950 dark:border-black/40 dark:bg-opacity-75"
-				initial={{ y: -100, x: "-50%", opacity: 0 }}
-				animate={{ y: 0, x: "-50%", opacity: 1 }}
+		<header className="sticky top-0 z-50 border-b border-line bg-bg/85 backdrop-blur-md">
+			<nav
+				aria-label="Main"
+				className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4 sm:px-8"
 			>
-				<ul className="flex flex-wrap items-center justify-center gap-y-1 px-2 py-2 text-[0.9rem] font-medium text-gray-500 sm:flex-nowrap sm:gap-1 sm:px-3">
-					{links.map((link) => (
-						<motion.li
-							className="h-3/4 flex items-center justify-center relative"
-							key={link.hash}
-							initial={{ y: -100, opacity: 0 }}
-							animate={{ y: 0, opacity: 1 }}
-						>
-							<Link
-								className={clsx(
-									"flex w-full items-center justify-center px-3 py-3 hover:text-gray-950 transition dark:text-gray-500 dark:hover:text-gray-300",
-									{
-										"text-gray-950 dark:text-gray-200":
-											activeSection === link.name,
-									}
-								)}
-								href={link.hash}
-								onClick={() => {
-									setActiveSection(link.name);
-									setTimeOfLastClick(Date.now());
-								}}
-							>
-								{link.name}
+				<Link
+					href="#home"
+					className="flex items-center gap-2 font-mono text-sm text-ink"
+					onClick={() => {
+						setActiveSection("Home");
+						setTimeOfLastClick(Date.now());
+					}}
+				>
+					<span aria-hidden className="h-2 w-2 rounded-full bg-accent" />
+					<span className="sr-only sm:not-sr-only">garilleti.me</span>
+				</Link>
 
-								{link.name === activeSection && (
-									<motion.span
-										className="bg-gray-100 rounded-full absolute inset-0 -z-10 dark:bg-gray-800"
-										layoutId="activeSection"
-										transition={{
-											type: "spring",
-											stiffness: 380,
-											damping: 30,
-										}}
-									></motion.span>
-								)}
-							</Link>
-						</motion.li>
-					))}
-				</ul>
-			</motion.nav>
+				<div className="flex items-center gap-1 sm:gap-3">
+					<ul className="flex items-center font-mono text-[0.7rem] uppercase tracking-[0.06em] sm:text-xs sm:tracking-[0.12em]">
+						{links
+							.filter((link) => link.name !== "Home")
+							.map((link) => {
+								const active = activeSection === link.name;
+								return (
+									<li key={link.hash}>
+										<Link
+											href={link.hash}
+											aria-current={active ? "location" : undefined}
+											className={clsx(
+												"relative block px-1.5 py-2 transition-colors sm:px-3",
+												active ? "text-ink" : "text-faint hover:text-ink"
+											)}
+											onClick={() => {
+												setActiveSection(link.name);
+												setTimeOfLastClick(Date.now());
+											}}
+										>
+											{link.name}
+											<span
+												aria-hidden
+												className={clsx(
+													"absolute inset-x-1.5 -bottom-[13px] h-px bg-accent transition-opacity sm:inset-x-3",
+													active ? "opacity-100" : "opacity-0"
+												)}
+											/>
+										</Link>
+									</li>
+								);
+							})}
+					</ul>
+					<ThemeSwitch />
+				</div>
+			</nav>
 		</header>
 	);
 }

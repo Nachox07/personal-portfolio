@@ -1,61 +1,31 @@
 "use client";
 
-import React, { useEffect, useState, createContext, useContext } from "react";
-
-type Theme = "light" | "dark";
+import React, { createContext, useContext } from "react";
 
 type ThemeContextProviderProps = {
   children: React.ReactNode;
 };
 
 type ThemeContextType = {
-  theme: Theme;
   toggleTheme: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
+// The theme lives on <html class="dark">, set before paint by the layout's inline script.
+// Components style both themes with `dark:` classes, so no React state is needed.
 export default function ThemeContextProvider({
   children,
 }: ThemeContextProviderProps) {
-  const [theme, setTheme] = useState<Theme>("light");
-
   const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-      window.localStorage.setItem("theme", "dark");
-      document.documentElement.classList.add("dark");
-    } else {
-      setTheme("light");
-      window.localStorage.setItem("theme", "light");
-      document.documentElement.classList.remove("dark");
-    }
+    const dark = document.documentElement.classList.toggle("dark");
+    try {
+      window.localStorage.setItem("theme", dark ? "dark" : "light");
+    } catch {}
   };
 
-  useEffect(() => {
-    const localTheme = window.localStorage.getItem("theme") as Theme | null;
-
-    if (localTheme) {
-      setTheme(localTheme);
-
-      if (localTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
-
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        toggleTheme,
-      }}
-    >
+    <ThemeContext.Provider value={{ toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

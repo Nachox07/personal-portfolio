@@ -6,6 +6,7 @@ import whisperland from "@/public/whisperland.webp";
 import qah from "@/public/qah.jpg";
 import tardeo from "@/public/tardeo.png";
 import extractionEvals from "@/public/extraction-evals.png";
+import daylit from "@/public/daylit.webp";
 
 export const links = [
   {
@@ -20,13 +21,26 @@ export const links = [
     name: "Projects",
     hash: "#projects",
   },
+  {
+    name: "Contact",
+    hash: "#contact",
+  },
 ] as const;
+
+export const contact = {
+  email: "hello@garilleti.me",
+  linkedin: "https://www.linkedin.com/in/nachogonzalezgarilleti/",
+  pitch:
+    "Open to staff, lead and founding-engineer roles: building AI agents in production, and the team around them. Permanent or contract.",
+} as const;
 
 type Experience = {
   role: string;
   company: string;
   period: string;
   description: string;
+  highlights?: readonly { label: string; detail: string }[];
+  customers?: readonly string[];
 };
 
 export const experienceData: readonly Experience[] = [
@@ -43,6 +57,41 @@ export const experienceData: readonly Experience[] = [
     period: "Sep 2021 — Oct 2025",
     description:
       "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me, turning live messages and call transcripts into real-time guidance for contact-centre agents. The products served Lufthansa at 13k+ conversations a day. I also owned the integrations that hand a conversation from the AI agent to human agents and back, with RingCentral Engage, Salesforce, Genesys and others.",
+    highlights: [
+      {
+        label: "Live Agent · Lufthansa",
+        detail:
+          "Scaled the bot-to-human handover from 50 simultaneous agents to 500 registered and 200+ active, at 13k+ conversations a day, through the peaks of Lufthansa's strikes.",
+      },
+      {
+        label: "AI Copilot",
+        detail:
+          "Sentiment analysis and real-time guidance for contact-centre agents, from live messages and call transcripts.",
+      },
+      {
+        label: "Real-time path",
+        detail:
+          "Moved websockets from broadcasting every event to all agents to per-subscription delivery, and added PostgreSQL read replicas with automatic failover on Kubernetes.",
+      },
+    ],
+    customers: [
+      "Lufthansa",
+      "Bosch",
+      "Allianz",
+      "DHL",
+      "Lidl",
+      "Bayer",
+      "E.ON",
+      "Škoda",
+      "Vueling",
+      "Frontier Airlines",
+      "ARAG",
+      "Fabletics",
+      "Mister Spex",
+      "Salzburg AG",
+      "Direct Travel",
+      "Nuuday",
+    ],
   },
   {
     role: "Senior Software Developer",
@@ -57,6 +106,13 @@ export const experienceData: readonly Experience[] = [
     period: "Jun 2019 — Mar 2020",
     description:
       "Shipped the MoPlay React Native app to both stores and built the casino website in three months with React, RxJS and xState.",
+  },
+  {
+    role: "Senior Software Developer",
+    company: "Ciklum",
+    period: "Dec 2017 — Jun 2019",
+    description:
+      "Front-end developer for Addison Global, the creators of MoPlay, on Ciklum's team. Started as a middle front-end developer and was promoted to senior in December 2018.",
   },
 ];
 
@@ -96,12 +152,20 @@ export const projectsData: readonly Project[] = [
     url: "https://github.com/Nachox07/extraction-evals",
   },
   {
+    title: "Daylit",
+    description:
+      "A macOS menu-bar app and Windows tray app that sets external monitor brightness from the sun's height, and from a window blind and room lights through Home Assistant",
+    tags: ["Swift", "SwiftUI", "WPF", ".NET", "Home Assistant"],
+    imageUrl: daylit,
+    url: "https://github.com/Nachox07/daylit",
+  },
+  {
     title: "Movie Recommender Alexa Skill",
     description:
-      "An Alexa skill I built for the Amazon Developer Promotion, which won several Echo devices",
+      "An Alexa skill I built for the Amazon Developer Promotion, which won several Echo devices. It reached thousands of monthly users",
     tags: ["TypeScript", "Axios", "AWS Lambda"],
     imageUrl: alexaSkill,
-    url: "https://www.amazon.es/Garilleti-Software-Recomendador-de-pel%C3%ADculas/dp/B081F2HJGS",
+    discontinued: true,
   },
   {
     title: "Whisperland iOS & Android App",
