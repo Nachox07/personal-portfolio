@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, type PointerEvent } from "react";
 import Image from "next/image";
 import { BsLinkedin } from "react-icons/bs";
 import { FaGithub, FaTwitter } from "react-icons/fa";
@@ -20,18 +21,59 @@ const socials = [
 export default function Intro() {
 	const { ref } = useSectionInView("Home", 0.5);
 	const current = experienceData[0];
+	const gridRef = useRef<HTMLDivElement>(null);
+	const cellRef = useRef<HTMLDivElement>(null);
+	const finePointer = useRef(false);
+	const frame = useRef(0);
+
+	useEffect(() => {
+		finePointer.current = window.matchMedia(
+			"(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
+		).matches;
+		return () => cancelAnimationFrame(frame.current);
+	}, []);
+
+	// Light the grid cell under the pointer, snapped to the 22px dot grid.
+	const onPointerMove = (e: PointerEvent<HTMLElement>) => {
+		if (!finePointer.current || !gridRef.current || !cellRef.current) return;
+		const { clientX, clientY } = e;
+		cancelAnimationFrame(frame.current);
+		frame.current = requestAnimationFrame(() => {
+			const grid = gridRef.current!.getBoundingClientRect();
+			const cell = cellRef.current!;
+			const x = Math.floor((clientX - grid.left) / 22) * 22;
+			const y = Math.floor((clientY - grid.top) / 22) * 22;
+			cell.style.setProperty("--x", `${x}px`);
+			cell.style.setProperty("--y", `${y}px`);
+			cell.style.opacity = "1";
+		});
+	};
+
+	const onPointerLeave = () => {
+		cancelAnimationFrame(frame.current);
+		if (cellRef.current) cellRef.current.style.opacity = "0";
+	};
 
 	return (
 		<section
 			ref={ref}
 			id="home"
 			aria-label="Introduction"
-			className="relative scroll-mt-[100rem] pb-24 pt-16 sm:pb-32 sm:pt-24"
+			className="relative scroll-mt-[100rem] pb-24 pt-8 sm:pb-32 sm:pt-24"
+			onPointerMove={onPointerMove}
+			onPointerLeave={onPointerLeave}
 		>
 			<div
+				ref={gridRef}
 				aria-hidden
-				className="trace-grid pointer-events-none absolute left-1/2 w-screen -translate-x-1/2 top-0 -z-10 h-full"
-			/>
+				className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-screen -translate-x-1/2 overflow-hidden"
+			>
+				<div className="trace-grid absolute inset-0" />
+				<div
+					ref={cellRef}
+					className="grid-cell absolute left-0 top-0 h-[22px] w-[22px] rounded-[3px] bg-accent/15 opacity-0 ring-1 ring-accent/40"
+				/>
+			</div>
 
 			<p className="rise mono-label flex flex-wrap items-center gap-x-2 gap-y-1 normal-case tracking-normal">
 				<span className="live-dot h-2 w-2 rounded-full bg-accent" aria-hidden />
@@ -42,7 +84,7 @@ export default function Intro() {
 				<span>{current.period}</span>
 			</p>
 
-			<div className="mt-8 flex flex-col-reverse gap-8 sm:flex-row sm:items-end sm:justify-between">
+			<div className="mt-6 flex flex-col-reverse gap-6 sm:mt-8 sm:flex-row sm:gap-8 sm:items-end sm:justify-between">
 				<h1
 					className="rise text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-7xl"
 					style={{ animationDelay: "60ms" }}
@@ -51,15 +93,17 @@ export default function Intro() {
 					<br />
 					González-Garilleti
 				</h1>
-				<Image
-					src={nachoWebp}
-					alt="Portrait of Nacho González-Garilleti"
-					width={112}
-					height={112}
-					quality={90}
-					priority
-					className="rise h-24 w-24 shrink-0 rounded-md border border-line object-cover sm:h-28 sm:w-28"
-				/>
+				<div className="portrait rise h-24 w-24 shrink-0 overflow-hidden rounded-md border border-line sm:h-28 sm:w-28">
+					<Image
+						src={nachoWebp}
+						alt="Portrait of Nacho González-Garilleti"
+						width={112}
+						height={112}
+						quality={90}
+						priority
+						className="h-full w-full object-cover"
+					/>
+				</div>
 			</div>
 
 			<div

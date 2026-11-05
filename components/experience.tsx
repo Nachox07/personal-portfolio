@@ -6,7 +6,10 @@ import { parsePeriod } from "@/lib/timeline";
 
 export default function Experience() {
 	// Rendered at build time, so the "Present" bar reaches the last deploy.
-	const now = new Date();
+	// TIMELINE_NOW pins the date in visual tests so the "Present" bar stays still.
+	const now = process.env.TIMELINE_NOW
+		? new Date(process.env.TIMELINE_NOW)
+		: new Date();
 	const spans = experienceData.map((item) => parsePeriod(item.period, now));
 	const axisStart = Math.floor(Math.min(...spans.map((s) => s.start)) / 12) * 12;
 	const axisEnd = Math.max(...spans.map((s) => s.end));

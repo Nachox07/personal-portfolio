@@ -1,6 +1,7 @@
 import React from "react";
 import InViewSection from "./in-view-section";
 import { contact } from "@/lib/data";
+import CopyEmail from "./copy-email";
 
 export default function Footer() {
 	return (
@@ -28,6 +29,7 @@ export default function Footer() {
 					>
 						{contact.email}
 					</a>
+					<CopyEmail email={contact.email} />
 					<a
 						href={contact.linkedin}
 						target="_blank"

@@ -29,6 +29,16 @@ html.dark {
   color-scheme: dark;
 }
 
+/* Accent options for the shuffle button (teal is the default above). */
+html[data-accent="amber"] { --accent: 140 84 6; }
+html[data-accent="cobalt"] { --accent: 29 78 216; }
+html[data-accent="rose"] { --accent: 190 18 60; }
+html[data-accent="violet"] { --accent: 109 40 217; }
+html.dark[data-accent="amber"] { --accent: 252 211 77; }
+html.dark[data-accent="cobalt"] { --accent: 147 197 253; }
+html.dark[data-accent="rose"] { --accent: 253 164 175; }
+html.dark[data-accent="violet"] { --accent: 196 181 253; }
+
 @layer base {
   body {
     @apply bg-bg text-ink antialiased;
@@ -71,6 +81,23 @@ html.dark {
   }
 }
 
+/* Portrait: a slight zoom inside its frame, only where hover exists. */
+.portrait img {
+  transition: transform 0.25s ease-out;
+}
+
+@media (hover: hover) {
+  .portrait:hover img {
+    transform: scale(1.06);
+  }
+}
+
+/* One cell of the hero grid follows the pointer (desktop only). */
+.grid-cell {
+  transform: translate3d(var(--x, -100px), var(--y, -100px), 0);
+  transition: opacity 0.2s;
+}
+
 .live-dot {
   animation: pulse-dot 2.4s ease-in-out infinite;
 }
@@ -93,5 +120,12 @@ html.dark {
   .live-dot,
   .rise {
     animation: none;
+  }
+  .portrait img {
+    transition: none;
+    transform: none !important;
+  }
+  .grid-cell {
+    display: none;
   }
 }
