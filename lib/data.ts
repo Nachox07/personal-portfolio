@@ -123,17 +123,18 @@ type Project = {
   imageUrl: StaticImageData | string;
   url?: string;
   discontinued?: boolean;
+  // Slug of a case study under content/projects, when one exists.
+  caseStudy?: string;
 };
 
 export const projectsData: readonly Project[] = [
   {
     title: "Tardeo.ai",
     description:
-      "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. A Node service reads what venues post, uses Claude to pull the events out, and publishes them to the site, Telegram channels and Instagram",
+      "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. A Node service reads what venues post, uses Claude to pull the events out, and publishes them to the site and Telegram channels",
     tags: [
       "TypeScript",
       "Node.js",
-      "Puppeteer",
       "Anthropic Claude",
       "SQLite",
       "Telegram Bot API",
@@ -183,6 +184,7 @@ export const projectsData: readonly Project[] = [
     ],
     imageUrl: whisperland,
     discontinued: true,
+    caseStudy: "whisperland",
   },
   {
     title: "Mapayuda for Volunteering",

@@ -6,6 +6,9 @@ const config: Config = {
 	content: [
 		"./components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
+		// Article typography lives at the root and in the MDX files themselves.
+		"./mdx-components.tsx",
+		"./content/**/*.mdx",
 	],
 	theme: {
 		extend: {
