@@ -1,10 +1,12 @@
 import Gallery from "@/components/case-study/gallery";
 import GeohashPan from "@/components/case-study/geohash-pan";
+import SocialPost from "@/components/case-study/social-post";
 import Trace from "@/components/case-study/trace";
 import welcome from "@/public/case-studies/whisperland/welcome.webp";
 import map from "@/public/case-studies/whisperland/map.webp";
 import create from "@/public/case-studies/whisperland/create.webp";
 import hero from "@/public/case-studies/whisperland/hero.webp";
+import promoVideo from "@/public/case-studies/whisperland/promo-video.webp";
 
 export const meta = {
   title: "Whisperland",
@@ -13,7 +15,7 @@ export const meta = {
   period: "April 2023 — March 2025",
   role: "Co-founder",
   status: "ready",
-  stack: ["React Native", "Redux Toolkit", "Mapbox", "Mixpanel", "NestJS", "PostgreSQL", "PostGIS", "Redis", "OneSignal", "DigitalOcean"],
+  stack: ["React Native", "Redux Toolkit", "Mapbox", "Mixpanel", "NestJS", "PostgreSQL", "PostGIS", "Redis", "OneSignal", "DigitalOcean", "Grafana"],
   cover: { src: hero, alt: "Three Whisperland screens: sign-in, the map of Sevilla with whisper pins, and creating a whisper" },
   links: [],
 };
@@ -37,7 +39,16 @@ Making the map the home screen was a deliberate choice. We did not want an infin
 
 ## Two founders and a lot of friends
 
-I built Whisperland with [Carlos Merchán](https://www.linkedin.com/in/carlosmercarm/), a friend from Sevilla. It took us about a year. Friends in Málaga became our QA team and our first users, and their feedback was crucial to testing what we were building. We talked to other entrepreneurs along the way, and several people took a real interest in the product side and shared ideas and feedback. When it was ready we launched it properly: an event in Sevilla, flyers, and our own t-shirts. The first tagged release went out in February 2024.
+I built Whisperland with [Carlos Merchán](https://www.linkedin.com/in/carlosmercarm/), a friend from Sevilla. It took us about a year. Friends in Málaga became our QA team and our first users, and their feedback was crucial to testing what we were building. We talked to other entrepreneurs along the way, and several people took a real interest in the product side and shared ideas and feedback. The first tagged release went out in February 2024, and in March we launched it properly: an event in Sevilla, flyers, our own t-shirts and a short video showing how the app worked. A lot of people tried Whisperland for the first time that day, and there are [photos from it](https://www.instagram.com/tardeo.ai/p/C4zsVSDNKlU/).
+
+<SocialPost
+  href="https://www.instagram.com/p/C4X2-KstG_Y/"
+  thumbnail={promoVideo}
+  alt="Still from the launch video: the Whisperland map of Sevilla with whisper clusters and the caption 'Navega por tu ciudad como nunca antes'"
+  date="Instagram, 11 March 2024"
+  text="The launch video, in Spanish: creating a whisper and exploring what is happening around you."
+  cta="Watch on Instagram"
+/>
 
 ## Keeping the map fast
 
@@ -83,7 +94,9 @@ The idea is clean; the details were not. Turning the map's rectangle into exactl
 
 The API is NestJS on Fastify, split into modules for auth, whispers, comments, users and followers, notifications, hashtags, places, search and referrals. We started on MongoDB and moved to PostgreSQL with PostGIS in late 2023. Places are points with a spatial index, searched by distance.
 
-Redis quietly did four jobs: caching, rate limiting, background job queues and the WebSocket adapter. Push notifications went through OneSignal, with one small rule that mattered a lot to how the app felt: you are never notified about your own actions. Docker images and media lived on DigitalOcean, and a guard kept us under 100,000 Mapbox requests.
+Redis quietly did four jobs: caching, rate limiting, background job queues and the WebSocket adapter. Push notifications went through OneSignal, with one small rule that mattered a lot to how the app felt: you are never notified about your own actions. All of it ran on DigitalOcean: the backend, the media and its CDN, and the CI/CD pipeline that built, deployed and autoscaled the API. Every address lived on our own domain, `api.whisper.land` for the API and `cdn.whisper.land` for media, so nothing in the app pointed at a provider's hostname. Grafana handled observability and alerts, and a guard kept us under 100,000 Mapbox requests.
+
+Telegram was our control room. Alerts landed there, and so did content moderation: when someone reported a whisper, a bot sent us the content with buttons to act on it, so a report could be handled from a phone with a single tap.
 
 On the phone it was React Native with Redux Toolkit and RTK Query. We tried `react-native-maps` on a branch and stayed with Mapbox, and a move to React Native's new architecture never made it out of its branch. Mixpanel told us how people actually used the app.
 
