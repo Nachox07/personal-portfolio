@@ -11,4 +11,6 @@ export type CaseStudyMeta = {
 	stack: readonly string[];
 	links: readonly { label: string; href: string }[];
 	cover?: { src: StaticImageData; alt: string };
+	// The home-page card: what the project is, its headline claim, and two or three short facts.
+	card?: { tagline: string; claim: string; context: string; facts: readonly string[]; image?: StaticImageData };
 };

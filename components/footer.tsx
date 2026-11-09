@@ -13,7 +13,7 @@ export default function Footer() {
 				className="mx-auto max-w-5xl scroll-mt-20 px-4 py-16 sm:px-8 sm:py-20"
 			>
 				<p className="font-mono text-xs text-accent" aria-hidden>
-					03
+					04
 				</p>
 				<h2
 					id="contact-title"
