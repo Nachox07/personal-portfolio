@@ -120,6 +120,66 @@ body {
   animation: rise 0.5s ease-out both;
 }
 
+/* Case-study cards: a small lift on hover, a visible ring on keyboard focus. */
+.work-card {
+  transition:
+    transform 180ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+.work-cover {
+  transition: transform 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+.work-arrow {
+  transition: transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+.work-card:has(a:focus-visible) {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .work-card:hover {
+    transform: translateY(-3px);
+    border-color: rgb(var(--accent) / 0.6);
+    box-shadow: 0 12px 32px -18px rgb(var(--accent) / 0.45);
+  }
+  .work-card:hover .work-cover {
+    transform: scale(1.02);
+  }
+  .work-card:hover .work-arrow {
+    transform: translateX(3px);
+  }
+}
+
+/* Cards and timeline bars ease in as they scroll into view, where the browser
+   supports scroll-driven animations. Elsewhere they are simply there. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+@keyframes draw-bar {
+  from {
+    transform: scaleX(0);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    .draw-bar {
+      transform-origin: left;
+      animation: draw-bar linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -130,6 +190,12 @@ body {
   }
   body {
     transition: none;
+  }
+  .work-card,
+  .work-cover,
+  .work-arrow {
+    transition: none;
+    transform: none !important;
   }
   .portrait img {
     transition: none;
