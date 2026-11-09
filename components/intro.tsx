@@ -110,18 +110,17 @@ export default function Intro() {
 				style={{ animationDelay: "120ms" }}
 			>
 				<p className="text-xl font-medium leading-snug tracking-tight sm:text-2xl">
-					Software engineer, 9 years in production. I build AI agents that are{" "}
-					<span className="text-accent">allowed to act on real systems.</span>
+					Software engineer, 9 years in production. I build AI agents that retrieve information and
+					call tools,{" "}
+					<span className="text-accent">with a person approving every change.</span>
 				</p>
 				<div className="space-y-4 text-base leading-relaxed text-muted">
 					<p>
-						Currently technical lead at OpenVPN, with 10 engineers across
-						development, QA and DevOps, after leading a cross-functional team of
-						7 at Cognigy.
+						Technical lead at OpenVPN, with 10 engineers across development, QA and DevOps.
 					</p>
-					<p>I like automating things, at work and at home.</p>
-					<p className="font-mono text-sm text-faint">
-						&quot;Success is not assured, failures either.&quot;
+					<p>
+						Before that I led AI Copilot and Live Agent at Cognigy (acquired by NICE), a
+						cross-functional team of 7. Our products served enterprise contact centres.
 					</p>
 				</div>
 			</div>
