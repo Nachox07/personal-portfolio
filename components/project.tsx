@@ -80,7 +80,7 @@ export default function Project({
 								rel="noopener noreferrer"
 								className="relative z-10 text-faint hover:text-ink"
 							>
-								{url.replace(/^https?:\/\/(www\.)?/, "")} <span aria-hidden>↗</span>
+								{url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/?\?.*$/, "")} <span aria-hidden>↗</span>
 								<span className="sr-only"> (opens in a new tab)</span>
 							</a>
 						)}
