@@ -131,7 +131,7 @@ export const projectsData: readonly Project[] = [
   {
     title: "Tardeo.ai",
     description:
-      "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. A Node service reads what venues post, uses Claude to pull the events out, and publishes them to the site and Telegram channels",
+      "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. A Node service reads what venues post, uses AI models, Claude today, to pull the events out, and publishes them to the site and Telegram channels",
     tags: [
       "TypeScript",
       "Node.js",
