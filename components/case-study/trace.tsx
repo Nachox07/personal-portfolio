@@ -16,7 +16,7 @@ export default function Trace({ spans, caption }: { spans: Span[]; caption: stri
 	const used = new Set(spans.map((s) => s.kind ?? "code"));
 	const legend = LEGEND.filter(([kind]) => used.has(kind));
 	return (
-		<figure className="mt-8 rounded-md border border-line bg-surface p-4 sm:p-5">
+		<figure data-reveal className="mt-8 rounded-md border border-line bg-surface p-4 sm:p-5">
 			<ol className="space-y-3">
 				{spans.map((s) => (
 					<li key={s.name} className="grid grid-cols-1 gap-1 sm:grid-cols-[11rem_1fr] sm:items-center sm:gap-4">
@@ -29,10 +29,10 @@ export default function Trace({ spans, caption }: { spans: Span[]; caption: stri
 							<div
 								className={
 									s.kind === "model" || s.kind === "network"
-										? "absolute top-0 h-2 rounded-sm bg-accent"
+										? "draw-bar absolute top-0 h-2 rounded-sm bg-accent"
 										: s.kind === "person"
-											? "absolute top-0 h-2 rounded-sm border border-dashed border-accent"
-											: "absolute top-0 h-2 rounded-sm bg-bar"
+											? "draw-bar absolute top-0 h-2 rounded-sm border border-dashed border-accent"
+											: "draw-bar absolute top-0 h-2 rounded-sm bg-bar"
 								}
 								style={{ left: `${s.start}%`, width: `${s.width}%` }}
 							/>
