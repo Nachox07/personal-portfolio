@@ -142,7 +142,7 @@ export const projectsData: readonly Project[] = [
       "Cloudflare",
     ],
     imageUrl: tardeo,
-    url: "https://tardeo.ai",
+    url: "https://tardeo.ai/?s=garilleti",
     caseStudy: "tardeo",
   },
   {
