@@ -63,7 +63,7 @@ export const experienceData: readonly Experience[] = [
       "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me. I owned the integrations that hand a conversation from the AI agent to human agents and back, with RingCentral Engage, Salesforce, Genesys and others.",
     highlights: [
       {
-        label: "Live Agent · Lufthansa",
+        label: "Live Agent",
         detail:
           "Redesigned the bot-to-human handover so it held up through enterprise contact centres' busiest peaks.",
       },
@@ -75,7 +75,7 @@ export const experienceData: readonly Experience[] = [
       {
         label: "Load tests",
         detail:
-          "Replayed how contact-centre agents actually work: real browsers in containers typing, sending and reloading while the backend took the handover load, so the tests measured what an agent feels, not just API throughput.",
+          "Replayed how the airline's agents actually worked: real browsers in containers typing, sending and reloading while the backend took the handover load, so the tests measured what an agent feels, not just API throughput.",
       },
       {
         label: "AI Copilot",
@@ -84,7 +84,6 @@ export const experienceData: readonly Experience[] = [
       },
     ],
     customers: [
-      "Lufthansa",
       "Bosch",
       "Allianz",
       "DHL",
