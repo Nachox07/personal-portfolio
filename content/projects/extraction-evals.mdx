@@ -9,10 +9,16 @@ export const meta = {
   summary:
     "Every prompt change looks like an improvement on the examples that inspired it. This is how I check whether a change to a production LLM pipeline actually helped, and the time the answer was no.",
   period: "October 2026",
-  role: "Author",
+  role: "Solo study",
   status: "ready",
-  stack: ["TypeScript", "Vitest", "Anthropic Claude", "LLM evaluation"],
+  stack: ["TypeScript", "Vitest", "Anthropic Claude", "OpenRouter", "LLM evaluation"],
   cover: { src: hero, alt: "Six invented posters from the public test set: a concert, a drinks deal, a food photo, an event already over, a children's workshop and a recap announcing the next date" },
+  card: {
+    tagline: "How I judge whether a prompt change to a production LLM pipeline helped.",
+    claim: "Did not replicate",
+    context: "a shipped prompt cut false alarms from 8 to 5, then showed no gain on 331 new images",
+    facts: ["Rule fixed before results", "9 of 15 model calls overturned", "~$69 in total"],
+  },
   links: [{ label: "Code and full report", href: "https://github.com/Nachox07/extraction-evals" }],
 };
 
@@ -23,6 +29,22 @@ export const meta = {
 Prompt changes come from me, and sometimes from a coding agent working on the service. Either way, they are hypotheses. Each one fixes the examples that prompted it, and almost every one looks like an improvement when you read a handful of outputs. The question that matters is narrower and harder: **does the change help on posts it was not written for?**
 
 Before this project, that was hard to answer. Changes were judged on a 150-image benchmark that was good at rejecting a weak model and not much else. 102 of its 150 labels were the production model's own answers, so a mistake every model shared could never show up. It ran each model once, so differences of one or two images were noise, and it only covered one kind of post. It could not approve a close model swap or catch a prompt regression.
+
+Its last run shows both sides. Ten models from several vendors went through the same harness, with the exact production prompt and output schema:
+
+| Model | Events missed | False alarms | $ per 1,000 images |
+|---|---|---|---|
+| Claude Sonnet 5.5, medium (production) | 0 | 6 | 7.02 |
+| GPT-6 Luna | 1 | 10 | 0.32 |
+| GPT-6.1 Sol | 2 | 1 | 4.37 |
+| Claude Haiku 5.5 | 3 | 6 | 0.35 |
+| Gemini 3.5 Flash-Lite | 3 | 14 | 1.57 |
+| Qwen 3.8 Flash | 4 | 14 | 0.30 |
+| Grok 4.7 | 8 | 2 | 17.87 |
+| Gemini 3.8 Flash | 24 | 0 | 6.28 |
+| GLM 5.3 Flash | 41 | 1 | 0.74 |
+
+Mistral Large 4 was rate-limited and answered only 63 of the 150. The whole run cost about $6.40. It did its job: the models that missed real events were out. What it could not tell me was whether GPT-6.1 Sol, with two misses but five fewer false alarms at about 40% less cost, was a better trade or just noise. That is the question this project was built to answer.
 
 ## An answer key you can trust
 
