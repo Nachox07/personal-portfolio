@@ -60,7 +60,7 @@ export const experienceData: readonly Experience[] = [
     company: "Cognigy (acquired by NICE)",
     period: "Sep 2021 — Oct 2025",
     description:
-      "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me, turning live messages and call transcripts into real-time guidance for contact-centre agents. I also owned the integrations that hand a conversation from the AI agent to human agents and back, with RingCentral Engage, Salesforce, Genesys and others.",
+      "Led AI Copilot and Live Agent with a cross-functional team of 7 reporting to me. I owned the integrations that hand a conversation from the AI agent to human agents and back, with RingCentral Engage, Salesforce, Genesys and others.",
     highlights: [
       {
         label: "Live Agent · Lufthansa",
@@ -68,14 +68,19 @@ export const experienceData: readonly Experience[] = [
           "Redesigned the bot-to-human handover so it held up through enterprise contact centres' busiest peaks.",
       },
       {
+        label: "Real-time path",
+        detail:
+          "Designed the move from broadcasting every event to all agents to per-conversation subscriptions, and added PostgreSQL read replicas with automatic failover on Kubernetes. Autoscaling followed queued chats and app-server metrics, not just CPU and memory.",
+      },
+      {
+        label: "Load tests",
+        detail:
+          "Replayed how contact-centre agents actually work: real browsers in containers typing, sending and reloading while the backend took the handover load, so the tests measured what an agent feels, not just API throughput.",
+      },
+      {
         label: "AI Copilot",
         detail:
           "Sentiment analysis and real-time guidance for contact-centre agents, from live messages and call transcripts.",
-      },
-      {
-        label: "Real-time path",
-        detail:
-          "Moved websockets from broadcasting every event to all agents to per-subscription delivery, and added PostgreSQL read replicas with automatic failover on Kubernetes.",
       },
     ],
     customers: [
@@ -116,7 +121,7 @@ export const experienceData: readonly Experience[] = [
     company: "Ciklum",
     period: "Dec 2017 — Jun 2019",
     description:
-      "Front-end developer for Addison Global, the creators of MoPlay, on Ciklum's team. Started as a middle front-end developer and was promoted to senior in December 2018.",
+      "Front-end developer for Addison Global, the creators of MoPlay, on Ciklum's team. Promoted to senior in December 2018.",
   },
 ];
 
