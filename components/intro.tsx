@@ -120,7 +120,7 @@ export default function Intro() {
 					</p>
 					<p>
 						Before that I led AI Copilot and Live Agent at Cognigy (acquired by NICE), a
-						cross-functional team of 7. Our products served enterprise contact centres.
+						cross-functional team of 7 building for enterprise contact centres.
 					</p>
 				</div>
 			</div>
