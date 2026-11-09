@@ -19,7 +19,7 @@ export default function Header() {
 				className="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 px-4 sm:px-8"
 			>
 				<Link
-					href="#home"
+					href="/#home"
 					className="flex items-center gap-2 font-mono text-sm text-ink"
 					onClick={() => {
 						setActiveSection("Home");
@@ -40,7 +40,7 @@ export default function Header() {
 									// Phones skip the section links: the email button is on the first screen.
 									<li key={link.hash} className="hidden sm:block">
 										<Link
-											href={link.hash}
+											href={`/${link.hash}`}
 											aria-current={active ? "location" : undefined}
 											className={clsx(
 												"relative block px-2 py-2 transition-colors sm:px-3",

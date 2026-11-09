@@ -1,0 +1,94 @@
+import Gallery from "@/components/case-study/gallery";
+import GeohashPan from "@/components/case-study/geohash-pan";
+import Trace from "@/components/case-study/trace";
+import welcome from "@/public/case-studies/whisperland/welcome.webp";
+import map from "@/public/case-studies/whisperland/map.webp";
+import create from "@/public/case-studies/whisperland/create.webp";
+import hero from "@/public/case-studies/whisperland/hero.webp";
+
+export const meta = {
+  title: "Whisperland",
+  summary:
+    "A map of what is happening around you, right now. We built a location-based social app in React Native, NestJS and Postgres, and spent most of our engineering energy on one question: how do you keep a map full of short-lived posts fast while people drag it around?",
+  period: "April 2023 — March 2025",
+  role: "Co-founder",
+  status: "ready",
+  stack: ["React Native", "Redux Toolkit", "Mapbox", "Mixpanel", "NestJS", "PostgreSQL", "PostGIS", "Redis", "OneSignal", "DigitalOcean"],
+  cover: { src: hero, alt: "Three Whisperland screens: sign-in, the map of Sevilla with whisper pins, and creating a whisper" },
+  links: [],
+};
+
+## A map that forgets
+
+The idea was simple to say out loud: open the app and see what is happening near you, right now. Not reviews from three years ago, not a list of every bar in town. Just what people around you thought was worth sharing today.
+
+We called each post a *whisper*. It is pinned to a place, holds up to 250 characters plus photos or a video, and it expires. You choose when, anywhere from an hour to two weeks ahead, and a background job sweeps expired whispers and their files every ten minutes. That one rule shaped the product. The map never turned into an archive; it only ever showed the present.
+
+Making the map the home screen was a deliberate choice. We did not want an infinite feed, where a ranking decides what you see and the same accounts sit on top forever. A map is about discovery and variety: everything nearby has the same chance to be seen, and you explore by moving around rather than by scrolling. Nearby whispers gather into clusters that show how many posts they hold, so a busy corner of the city stands out at a glance, and a sheet at the bottom lists what is on screen. Whispers from people you follow stand out too. Around the map sit the social basics you would expect, from comments and likes to follows, hashtags and search, plus sign-in with Google, Apple or as a guest. It shipped in Spanish and English.
+
+<Gallery
+  caption="The app in December 2023, in the iOS simulator. Click to enlarge."
+  items={[
+    { src: welcome, alt: "Whisperland welcome screen with sign-in options", caption: "Sign in with Google or Apple, or just look around as a guest." },
+    { src: map, alt: "Whisperland map of Sevilla with whisper pins and a cluster of two", caption: "The map of Sevilla, with pins, a cluster and quick actions." },
+    { src: create, alt: "Create a whisper screen with a map, a 250-character text box, a place and an end date", caption: "Creating a whisper: where, what, and when it disappears." },
+  ]}
+/>
+
+## Two founders and a lot of friends
+
+I built Whisperland with [Carlos Merchán](https://www.linkedin.com/in/carlosmercarm/), a friend from Sevilla. It took us about a year. Friends in Málaga became our QA team and our first users, and their feedback was crucial to testing what we were building. We talked to other entrepreneurs along the way, and several people took a real interest in the product side and shared ideas and feedback. When it was ready we launched it properly: an event in Sevilla, flyers, and our own t-shirts. The first tagged release went out in February 2024.
+
+## Keeping the map fast
+
+Maps are deceptive. Zoom out over a city and a naive client asks the server for every post in view, which is fine with ten posts and painful with ten thousand. People also never hold a map still: they drag, pinch and drag back, and every small movement is a new view.
+
+Our first design, sketched in August 2023, leaned on the server. It split the world into 2 km squares, cached each square in Redis, showed a heatmap of counts once you zoomed out past about 16 km², and clustered overlapping whispers before sending them. What we shipped turned that around and moved most of the work to the phone.
+
+| | First design (Aug 2023) | What shipped |
+|---|---|---|
+| How the map is split | 2 km squares | Geohash cells, sized to what is on screen |
+| Database | MongoDB | PostgreSQL 15 with PostGIS |
+| Cache | Redis, on the server | 45 seconds per cell, on the phone |
+| Zoomed out | Heatmap of counts | Up to 100 whispers, then a nudge to zoom in |
+| Clustering | On the server | On the phone, with `supercluster` |
+
+The key idea is that a map view makes a terrible cache key. Move the map by a single pixel and its bounding box is a brand-new query, so caching by viewport caches nothing, and a user dragging around a city fires a request on almost every gesture.
+
+Geohashes fix that. A geohash turns a point on Earth into a short string, and every point inside the same cell shares the same prefix. Each whisper is stored with an eight-character geohash next to its PostGIS point, so "everything in this cell" becomes a prefix match on an indexed text column instead of a spatial query. More importantly, cells are fixed. Snapping the view to a grid turns a camera that moves continuously into a small set of stable keys, and stable keys are something you can cache, deduplicate and reuse.
+
+The phone does the snapping. Every time the map reports new bounds, it ignores views identical to the last one, waits 150 milliseconds, and then picks the cell size from the visible area: six characters, cells of roughly 1.2 by 0.6 km, for a view under 5 km²; five characters, about 5 by 5 km, under 100 km²; four for a whole region, and so on. Tying the cell size to the zoom keeps the number of cells per screen bounded, whether you are looking at one street or the whole city. Each cell remembers when it was last fetched, and anything loaded in the last 45 seconds is reused, so a pan only pays for the strip of cells that just came into view.
+
+<GeohashPan />
+
+<Trace
+  caption="What happens every time the map moves."
+  spans={[
+    { name: "map moves", detail: "Skip identical views, then wait 150 ms", start: 0, width: 10, kind: "code" },
+    { name: "size the cells", detail: "Pick a geohash length from the visible area", start: 10, width: 8, kind: "code" },
+    { name: "cover the screen", detail: "Turn the view into a set of cells", start: 18, width: 12, kind: "code" },
+    { name: "check the cache", detail: "Drop cells fetched in the last 45 seconds", start: 30, width: 8, kind: "code" },
+    { name: "fetch the rest", detail: "One request; a prefix match per cell, 100 whispers in total, with a count per cell", start: 38, width: 34, kind: "network" },
+    { name: "cluster on the phone", detail: "supercluster groups what is on screen", start: 72, width: 28, kind: "code" },
+  ]}
+/>
+
+The server walks the requested cells in order with a single budget of 100 whispers for the whole request, and sends back how many whispers each cell really holds. When the totals add up to more than came back, the app shows a gentle "there are more whispers here, zoom in to see them" instead of drowning the map. Clustering then happens on the phone with `supercluster`, so regrouping pins while you drag never waits on the network. Changing a filter clears the cache and fetches again.
+
+The design has trade-offs I would name in any review. The cache key is the geohash prefix, so zooming in or out changes the cell size and misses the cache even for an area loaded seconds earlier. A cell can be up to 45 seconds stale, so a new whisper nearby can take that long to appear. And because the 100-whisper budget is shared and filled cell by cell, once it runs out the remaining cells are skipped without even a count, so in a very busy view the nudge to zoom in can undercount.
+
+The idea is clean; the details were not. Turning the map's rectangle into exactly the right cells, with no gaps at the edges, took several rounds. The precision maths broke at very high zoom, and the smallest cells end up trimmed back to six characters. A stale closure in the cache sent us chasing ghosts until whispers were taken out of the persisted state entirely. And Android needed its own camera and clustering workarounds, including a slightly wider cluster radius, 19% of the screen against 15% on iOS, to stay smooth.
+
+## Under the hood
+
+The API is NestJS on Fastify, split into modules for auth, whispers, comments, users and followers, notifications, hashtags, places, search and referrals. We started on MongoDB and moved to PostgreSQL with PostGIS in late 2023. Places are points with a spatial index, searched by distance.
+
+Redis quietly did four jobs: caching, rate limiting, background job queues and the WebSocket adapter. Push notifications went through OneSignal, with one small rule that mattered a lot to how the app felt: you are never notified about your own actions. Docker images and media lived on DigitalOcean, and a guard kept us under 100,000 Mapbox requests.
+
+On the phone it was React Native with Redux Toolkit and RTK Query. We tried `react-native-maps` on a branch and stayed with Mapbox, and a move to React Native's new architecture never made it out of its branch. Mixpanel told us how people actually used the app.
+
+## What it taught me
+
+The hardest problem was never the map. It was getting people to post. Only about one user in ten ever did, and everyone else already shared their plans on the social apps they used every day. A social app lives or dies on that number, and ours was too low.
+
+Meanwhile, an AI engine we had built to fill the map with plans from venues kept getting better. At some point it was clear that the engine was the product and the app around it was mostly maintenance. Carlos kept testing from time to time as it became a solo project, the app was retired in March 2025, and the engine went on to become [Tardeo](https://tardeo.ai).
