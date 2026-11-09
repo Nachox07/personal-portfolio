@@ -65,7 +65,7 @@ export const experienceData: readonly Experience[] = [
       {
         label: "Live Agent",
         detail:
-          "Scaled the bot-to-human handover from 50 simultaneous agents to 500 registered and 200+ active, at 13k+ conversations a day for a major airline, through the peaks of its strikes. Agent pages that had frozen for up to ten minutes, with requests stuck for 30+ seconds, came back to near-instant.",
+          "Redesigned the bot-to-human handover so it held up through enterprise contact centres' busiest peaks, when agent numbers multiply and the old design stalled.",
       },
       {
         label: "Real-time path",
@@ -75,7 +75,7 @@ export const experienceData: readonly Experience[] = [
       {
         label: "Load tests",
         detail:
-          "Replayed how the airline's agents actually worked: real browsers in containers typing, sending and reloading while the backend took the handover load, so the tests measured what an agent feels, not just API throughput.",
+          "Replayed how contact-centre agents actually work: real browsers in containers typing, sending and reloading while the backend took the handover load, so the tests measured what an agent feels, not just API throughput.",
       },
       {
         label: "AI Copilot",
