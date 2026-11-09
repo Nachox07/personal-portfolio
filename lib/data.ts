@@ -107,7 +107,7 @@ export const experienceData: readonly Experience[] = [
     company: "William Hill",
     period: "Mar 2020 — Sep 2021",
     description:
-      "Sportsbook backend microservices on Node.js, TypeScript, Kubernetes and Kafka, plus the React front end that consumed them.",
+      "Sportsbook backend microservices on Node.js, TypeScript, Kubernetes and Kafka, handling 300+ requests a second, plus the React front end that consumed them.",
   },
   {
     role: "Senior Software Developer",
