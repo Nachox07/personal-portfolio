@@ -1,0 +1,26 @@
+name: Owner action or decision
+description: A decision, approval, merge or account step only the owner can do.
+labels: ["owner-action"]
+body:
+  - type: textarea
+    id: ask
+    attributes:
+      label: What is needed
+      description: The one decision or action, in one sentence.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and recommendation
+      description: The choices, what each means, which one is recommended and why.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Exact steps
+      description: Where to click or what to run. Never paste secrets here.
+  - type: textarea
+    id: after
+    attributes:
+      label: What happens after
+      description: What Claude does once this is done, and how we check it worked.
