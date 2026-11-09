@@ -1,0 +1,30 @@
+name: Bug
+description: Something on garilleti.me looks or behaves wrong.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: seen
+    attributes:
+      label: What we see
+      description: Page, device and width, theme, screenshot. Quote the owner if they reported it.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen
+    validations:
+      required: true
+  - type: textarea
+    id: cause
+    attributes:
+      label: Cause (with evidence)
+      description: A reproduction (Playwright script or steps) and the file and line. "Not found yet" until reproduced.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      value: |
+        - [ ] Reproduced, cause written above with evidence
+        - [ ] Fix has a test that fails without it
+        - [ ] Checked on a preview deployment
