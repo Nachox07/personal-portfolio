@@ -37,7 +37,8 @@ export default function AccentSwitch() {
 					aria-hidden
 					className="h-2.5 w-2.5 rounded-full bg-accent transition-transform group-hover:scale-125 group-active:scale-90 motion-reduce:transition-none"
 				/>
-				Shuffle
+				{/* The word drops on the narrowest phones so the menu button fits. */}
+				<span className="hidden min-[380px]:inline">Shuffle</span>
 			</button>
 			<span role="status" aria-live="polite" className="sr-only">
 				{announce}
