@@ -14,7 +14,7 @@ type SocialPostProps = {
 // so the page loads no third-party code and sets no cookies.
 export default function SocialPost({ href, thumbnail, alt, date, text, cta }: SocialPostProps) {
 	return (
-		<figure className="mt-8">
+		<figure data-reveal className="mt-8">
 			<a
 				href={href}
 				target="_blank"

@@ -27,8 +27,10 @@ export default function SelectedWork() {
 					return (
 						<li
 							key={slug}
+							data-reveal
+							style={{ "--reveal-delay": `${lead ? 0 : 80 * i}ms` } as React.CSSProperties}
 							className={clsx(
-								"work-card reveal group relative flex flex-col overflow-hidden rounded-lg border border-line bg-surface",
+								"work-card group relative flex flex-col overflow-hidden rounded-lg border border-line bg-surface",
 								// The lead card spans the row, image beside the text.
 								lead && "md:col-span-2 md:grid md:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]"
 							)}

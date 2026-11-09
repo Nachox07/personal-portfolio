@@ -20,7 +20,9 @@ export default function SectionHeading({
 			<h2 id={id} className="text-2xl font-semibold tracking-tight sm:text-3xl">
 				{children}
 			</h2>
-			<span aria-hidden className="h-px flex-1 translate-y-[-0.35rem] bg-line" />
+			<span aria-hidden className="relative h-px flex-1 -translate-y-[0.35rem]">
+				<span data-reveal="rule" className="absolute inset-0 bg-line" />
+			</span>
 		</div>
 	);
 }

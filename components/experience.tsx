@@ -51,7 +51,7 @@ export default function Experience() {
 				{experienceData.map((item, i) => {
 					const span = spans[i];
 					return (
-						<li key={item.company} className="border-b border-line">
+						<li key={item.company} data-reveal className="border-b border-line">
 							<details open={i < 2} className="group">
 								<summary className="grid cursor-pointer list-none grid-cols-1 gap-x-8 gap-y-3 py-5 sm:grid-cols-[17rem_1fr] sm:items-center [&::-webkit-details-marker]:hidden">
 									<div className="flex gap-3">

@@ -69,7 +69,7 @@ export default function GeohashPan() {
 	const inView2 = (c: number, r: number) => c >= 2 && c <= 4 && r >= 1 && r <= 2;
 
 	return (
-		<figure className="mt-8 rounded-md border border-line bg-surface p-4 sm:p-5">
+		<figure data-reveal className="mt-8 rounded-md border border-line bg-surface p-4 sm:p-5">
 			<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
 				<Grid
 					title="1. Open the map: 6 cells fetched"
