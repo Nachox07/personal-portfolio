@@ -66,7 +66,7 @@ export default function Lightbox({ items, index, onIndexChange }: LightboxProps)
 				touchX.current = null;
 				if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
 			}}
-			className="m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 text-ink backdrop:bg-black/85"
+			className="m-0 h-full max-h-none w-full max-w-none bg-black/95 p-0 text-white backdrop:bg-transparent"
 		>
 			{item && (
 				<div className="flex h-full w-full flex-col items-center justify-center gap-4 p-4 sm:p-10">
