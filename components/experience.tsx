@@ -26,7 +26,7 @@ export default function Experience() {
 			labelledBy="experience-title"
 			className="scroll-mt-20 pb-24 sm:pb-32"
 		>
-			<SectionHeading index="01" id="experience-title">
+			<SectionHeading index="02" id="experience-title">
 				Experience
 			</SectionHeading>
 
@@ -78,8 +78,8 @@ export default function Experience() {
 										<div
 											className={
 												span.current
-													? "absolute top-0 h-2 rounded-sm bg-accent"
-													: "absolute top-0 h-2 rounded-sm bg-bar transition-colors group-hover:bg-faint"
+													? "draw-bar absolute top-0 h-2 rounded-sm bg-accent"
+													: "draw-bar absolute top-0 h-2 rounded-sm bg-bar transition-colors group-hover:bg-faint"
 											}
 											style={{
 												left: `${pct(span.start)}%`,
