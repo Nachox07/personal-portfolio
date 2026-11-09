@@ -1,12 +1,15 @@
 import type { ComponentType } from "react";
 import type { CaseStudyMeta } from "./case-study-types";
+import Whisperland, { meta as whisperland } from "@/content/projects/whisperland.mdx";
 
 type CaseStudy = { meta: CaseStudyMeta; Content: ComponentType };
 
 // Published case studies, keyed by slug. Each entry imports an MDX file from
 // content/projects. Drafts are written and previewed locally and only committed
 // once they are ready, because this repository is public.
-const all: Record<string, CaseStudy> = {};
+const all: Record<string, CaseStudy> = {
+	whisperland: { meta: whisperland, Content: Whisperland },
+};
 
 // Drafts show locally and on preview deployments, never on garilleti.me.
 export function isPublished(slug: string): boolean {

@@ -135,7 +135,6 @@ export const projectsData: readonly Project[] = [
     tags: [
       "TypeScript",
       "Node.js",
-      "Puppeteer",
       "Anthropic Claude",
       "SQLite",
       "Telegram Bot API",
@@ -185,6 +184,7 @@ export const projectsData: readonly Project[] = [
     ],
     imageUrl: whisperland,
     discontinued: true,
+    caseStudy: "whisperland",
   },
   {
     title: "Mapayuda for Volunteering",
