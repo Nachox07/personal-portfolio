@@ -103,3 +103,24 @@ test("a grid cell follows the pointer in the hero", async ({ page, viewport }) =
 	const x = await cell.evaluate((el) => el.style.getPropertyValue("--x"));
 	expect(Number.parseInt(x) % 22).toBe(0);
 });
+
+test("on phones the menu opens, jumps to a section and closes", async ({ page, viewport }) => {
+	test.skip((viewport?.width ?? 0) >= 640, "the section links are in the header on wider screens");
+	await page.goto("/");
+	const button = page.getByRole("button", { name: "Open menu" });
+	await button.click();
+	await expect(page.getByRole("button", { name: "Close menu" })).toHaveAttribute("aria-expanded", "true");
+	await page.locator("#section-menu").getByRole("link", { name: "Experience" }).click();
+	await expect(page).toHaveURL(/#experience$/);
+	await expect(page.locator("#section-menu")).toBeHidden();
+	await expect(page.locator("#experience-title")).toBeInViewport();
+});
+
+test("on phones Esc closes the menu and returns focus to its button", async ({ page, viewport }) => {
+	test.skip((viewport?.width ?? 0) >= 640, "the section links are in the header on wider screens");
+	await page.goto("/");
+	await page.getByRole("button", { name: "Open menu" }).click();
+	await page.keyboard.press("Escape");
+	await expect(page.locator("#section-menu")).toBeHidden();
+	await expect(page.getByRole("button", { name: "Open menu" })).toBeFocused();
+});

@@ -84,6 +84,7 @@ export const experienceData: readonly Experience[] = [
       },
     ],
     customers: [
+      "Lufthansa",
       "Bosch",
       "Allianz",
       "DHL",
