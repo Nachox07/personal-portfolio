@@ -4,6 +4,7 @@ import Header from "@/components/header";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import Footer from "@/components/footer";
+import RevealObserver from "@/components/reveal-observer";
 import ThemeContextProvider from "@/context/theme-context";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -70,6 +71,7 @@ export default function RootLayout({
 						<Header />
 						{children}
 						<Footer />
+						<RevealObserver />
 					</ActiveSectionContextProvider>
 				</ThemeContextProvider>
 			</body>

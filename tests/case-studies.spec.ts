@@ -77,6 +77,6 @@ test("opening a case study from the home page starts at the top", async ({ page 
 	await card.scrollIntoViewIfNeeded();
 	await card.click();
 	await expect(page).toHaveURL(/\/projects\/tardeo$/);
-	await expect(page.getByRole("link", { name: /All projects/ })).toBeInViewport();
+	await expect(page.getByRole("link", { name: /All work/ })).toBeInViewport();
 	await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
 });

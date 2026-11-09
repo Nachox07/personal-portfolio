@@ -87,7 +87,6 @@ export default function Intro() {
 			<div className="mt-6 flex flex-col-reverse gap-6 sm:mt-8 sm:flex-row sm:gap-8 sm:items-end sm:justify-between">
 				<h1
 					className="text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] sm:text-7xl"
-					style={{ animationDelay: "60ms" }}
 				>
 					Nacho
 					<br />
@@ -107,7 +106,7 @@ export default function Intro() {
 			</div>
 
 			<div
-				className="mt-10 grid gap-6 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12"
+				className="rise mt-10 grid gap-6 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] sm:gap-12"
 				style={{ animationDelay: "120ms" }}
 			>
 				<p className="text-xl font-medium leading-snug tracking-tight sm:text-2xl">

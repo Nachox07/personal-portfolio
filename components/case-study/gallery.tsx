@@ -11,7 +11,7 @@ export default function Gallery({ items, caption }: { items: Item[]; caption?: s
 	const [open, setOpen] = useState<number | null>(null);
 
 	return (
-		<figure className="mt-8">
+		<figure data-reveal className="mt-8">
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
 				{items.map((item, i) => (
 					<div key={item.alt}>
