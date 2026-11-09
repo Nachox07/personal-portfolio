@@ -1,0 +1,58 @@
+name: Work item (feature, change, fix)
+description: Something to build or change on garilleti.me. Claude and the owner use the same shape.
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repository is public. No draft articles, unreviewed numbers, private product data, secrets or Claude session links here. Questions for the owner go in chat, not in the issue.
+  - type: textarea
+    id: about
+    attributes:
+      label: What it is about
+      description: The ask in plain words. Quote the owner when possible.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: What it does for the site's readers (hiring managers, recruiters, engineers), or what breaks if we skip it.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan
+      description: Short steps, one per line. For a visual change, the directions considered and which one was picked.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Checkable statements, each with how it is verified (test, screenshot, Lighthouse run, live check).
+      value: |
+        - [ ] `npm run lint`, `npm run build` and `npm run test:visual` pass
+        - [ ] Lighthouse no worse than before (performance, accessibility)
+        - [ ] Checked at phone and desktop width, light and dark
+        - [ ] 
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Expected output
+      description: PR, preview URL, screenshots, a decision-log entry.
+    validations:
+      required: true
+  - type: textarea
+    id: owner
+    attributes:
+      label: Owner steps
+      description: Decisions, approvals of copy, merges. "None" if none.
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: Branch, PRs, related issues. Updated as work moves.
