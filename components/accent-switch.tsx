@@ -31,14 +31,20 @@ export default function AccentSwitch() {
 				onClick={shuffle}
 				aria-label="Shuffle colour theme"
 				title="Shuffle colour theme"
-				className="group flex h-9 items-center gap-2 rounded-md border border-line px-2.5 font-mono text-xs uppercase tracking-[0.08em] text-muted transition-colors hover:border-accent hover:text-ink"
+				className="group grid h-9 w-9 place-items-center rounded-md border border-line transition-colors hover:border-accent"
 			>
-				<span
+				{/* Three overlapping circles in the current theme; they turn a little on hover. */}
+				<svg
 					aria-hidden
-					className="h-2.5 w-2.5 rounded-full bg-accent transition-transform group-hover:scale-125 group-active:scale-90 motion-reduce:transition-none"
-				/>
-				{/* The word drops on the narrowest phones so the menu button fits. */}
-				<span className="hidden min-[380px]:inline">Shuffle</span>
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					className="transition-transform duration-300 group-hover:rotate-[120deg] group-active:scale-90 motion-reduce:transition-none"
+				>
+					<circle cx="5.5" cy="6" r="3.6" className="fill-accent" />
+					<circle cx="10.5" cy="6" r="3.6" className="fill-accent/50" />
+					<circle cx="8" cy="10.4" r="3.6" className="fill-accent/20" />
+				</svg>
 			</button>
 			<span role="status" aria-live="polite" className="sr-only">
 				{announce}
