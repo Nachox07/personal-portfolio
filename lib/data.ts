@@ -53,7 +53,7 @@ export const experienceData: readonly Experience[] = [
     company: "OpenVPN",
     period: "Nov 2025 — Present",
     description:
-      "Lead a team of 10 across development, QA and DevOps. Build AI agents that retrieve information and call tools, where a person approves any change before it is applied.",
+      "Lead a team of 10 across development, QA and DevOps. Build AI agents that retrieve information and call tools, where a person approves any change before it is applied. Built load tests that emulate 110k+ devices and gateways connecting to the backend at once, to benchmark its performance.",
   },
   {
     role: "Technical Lead Engineer",
@@ -107,7 +107,7 @@ export const experienceData: readonly Experience[] = [
     company: "William Hill",
     period: "Mar 2020 — Sep 2021",
     description:
-      "Sportsbook backend microservices on Node.js, TypeScript, Kubernetes and Kafka, handling 300+ requests a second, plus the React front end that consumed them.",
+      "Sportsbook backend microservices on Node.js, TypeScript, Kubernetes and Kafka, handling 300+ requests a second and 1k+ at Boxing Day peaks, with thousands of Kafka messages a second, plus the React front end that consumed them.",
   },
   {
     role: "Senior Software Developer",
