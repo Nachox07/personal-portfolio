@@ -1,0 +1,129 @@
+import Trace from "@/components/case-study/trace";
+import Figure from "@/components/case-study/figure";
+import home from "@/public/case-studies/tardeo/home.webp";
+import funnel from "@/public/case-studies/tardeo/funnel-28d.webp";
+import webDaily from "@/public/case-studies/tardeo/web-daily-28d.webp";
+import aiCost from "@/public/case-studies/tardeo/ai-cost-daily-30d.webp";
+
+export const meta = {
+  title: "Tardeo.ai",
+  summary:
+    "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. Behind it is an engine that reads what venues post publicly, uses a vision model to turn each post into dated plans, double-checks the result in code and publishes it every day. This is how it works, what broke, and how the numbers keep changing the product.",
+  period: "October 2023 — present",
+  role: "Creator",
+  status: "ready",
+  stack: ["TypeScript", "Node.js", "Claude", "OpenAI (2023–24)", "OpenRouter (benchmarks)", "SQLite", "Astro", "Cloudflare", "Telegram Bot API"],
+  links: [{ label: "tardeo.ai", href: "https://tardeo.ai/?s=garilleti" }],
+  cover: { src: home, alt: "The tardeo.ai home page: what to do today in your city, with this week's plan counts for Málaga, Sevilla, Fuengirola and Marbella" },
+};
+
+## Why I built it
+
+Most of the places I love, I found by accident. I cycle and walk around my city a lot, and that is how I stumble on the places and plans I end up going back to. Had I stayed at home, I would never have heard of them.
+
+The alternative is to follow every venue on social media and piece the week together yourself. It is too much noise, too many accounts, and far too much time spent planning something that should feel spontaneous. So I set out to automate it. I choose the venues and promoters worth following, an AI reads what they publish and keeps only the plans that matter, and code checks the result, so planning an evening takes minutes instead of an evening of scrolling.
+
+The cities are simply where I live and travel most, Málaga province and Sevilla. The week I wrote this, Tardeo listed 124 plans in Málaga, 55 in Sevilla, 47 in Fuengirola and 62 in Marbella.
+
+## From an app to a website
+
+Tardeo started life as [Whisperland](/projects/whisperland), a mobile app I built with a friend where people would pin interesting places and events to a map in real time. It taught us a hard lesson: only about one user in ten ever posted, and everyone else already shared their plans on the social apps they used every day. My friend kept testing from time to time, and it became a solo project.
+
+The engine underneath kept getting better, though. Its first commit landed in October 2023, and by late November it was reading text with `gpt-3.5-turbo`. In May 2024 it began reading the posters themselves, and in July 2024 Claude took over as the model that reads them. Once the engine could find plans on its own, an app that nobody posted to was mostly maintenance.
+
+So the format changed, twice. First to Telegram channels, with no app to install and no account to create. They grew, but slowly, and a chat turned out to be a poor place to browse plans: you want to filter, sort and compare. People do not want to install yet another app or register for anything either, and honestly neither do I. The answer was a free public website with no account at all. In March 2025 the app was retired and the product became Tardeo, rebuilt as a static site in Astro. The name came from the plans I was hunting for most often: *tardeo* is the word every Spaniard knows for an afternoon that slides into an evening out.
+
+## How a post becomes a plan
+
+<Trace
+  caption="One post, from arrival to publication."
+  spans={[
+    { name: "seen check", detail: "Skip anything already analysed", start: 0, width: 6, kind: "code" },
+    { name: "read the post", detail: "A vision model reads the poster, extra images and text", start: 6, width: 34, kind: "model" },
+    { name: "check the dates", detail: "Expired, too far ahead or undated: dropped", start: 40, width: 8, kind: "code" },
+    { name: "split roundups", detail: "One poster with many dates becomes one plan per act", start: 48, width: 18, kind: "model" },
+    { name: "merge duplicates", detail: "Rules first, a small model for same-night pairs", start: 66, width: 12, kind: "code" },
+    { name: "owner review", detail: "Edit any plan; weekend posts need a reviewed preview", start: 78, width: 10, kind: "person" },
+    { name: "publish", detail: "Static site build and one Telegram channel per city", start: 88, width: 12, kind: "code" },
+  ]}
+/>
+
+The rule I keep coming back to is simple: the model does the reading, and code does everything that has to be right every time.
+
+The model, Claude today, looks at the poster, any extra images and the text that came with it, and answers through a forced tool call with a fixed schema: category, whether it suits children, start and end dates, the printed time, whether the date was explicit, relative or missing, the place, and a summary in Spanish and English. For a long time the engine parsed JSON out of the model's prose instead, which meant a sanitiser, retries, and the occasional answer that thought out loud halfway through. Switching to structured tool output in April 2026 did away with all of that.
+
+Dates are where a model can be confidently wrong, so code checks them afterwards. It drops events that have already happened, a "this Saturday" that lands more than six days after the post, and future posts with no date at all. It clamps end dates the poster never printed, and reads every time as Madrid wall time.
+
+Some posters list a whole month of acts. When a poster has three or more dated events, a second call splits it into one plan per act. Duplicates across venues and promoters are merged by rules first, rules I measured on 1,865 labelled pairs with a second labeller before trusting them, and only the genuinely doubtful same-night pairs go to a small model, whose verdict is cached.
+
+A person stays in the loop. I can edit any plan from a private dashboard and the change reaches every channel, and the weekend posts refuse to go out without a fresh reviewed preview. At the end, the engine writes a single feed and a deploy hook rebuilds the site. If that feed ever fails to load, the site builds empty pages rather than breaking.
+
+## Picking the model, and paying for it
+
+Tardeo is not tied to one vendor. It started on OpenAI models and moved to Claude in July 2024, and the model behind it has changed seven times since the first version. These days every candidate goes through the same benchmark harness, which can run any model through OpenRouter with the exact production prompt and output schema, so a comparison tests the real thing. The most recent switch, in October 2026, was settled that way rather than by gut feeling. On 38 real posters, Claude Sonnet 5.5 at medium effort dated all 40 events correctly for about $7.73 per thousand images, while Haiku was twenty times cheaper and got roughly one post in seven wrong. In a separate run of 150 images across ten models from several vendors, Sonnet 5.5 was the only one that missed no events at all. The switching rule is written down now: a new model may not miss more events than the current one, and accuracy wins every tie. Cheap models still have a place, but they have to earn it: when Haiku broke a rule in its own prompt on some gating calls, those calls went back to Sonnet.
+
+That first benchmark had a flaw I only saw later: many of its labels were the production model's own answers, so a mistake every model shared could never show up. The current one uses an answer key from a stronger model, with every disagreement reviewed by me, and a scoring rule fixed before any results. On 331 held-out images the production setup gets 98.2–98.5% right, and the noise between runs is about three images, so a change of one or two is not a result.
+
+Small inputs matter too. In an A/B test on 489 posts, with two arms that differed only in whether the venue's own text went along with the image, the arm with the text got 45 more decisions right and 72 more posts fully right, for about a third more cost per post. It shipped. How a prompt change gets judged is a story of its own, told in [Extraction evals](/projects/extraction-evals).
+
+Reading every plan with a vision model costs about €2–3 a day; the first nine days of November 2026 came to €20.23. Every analysis logs a hash of the prompt, the model and the tokens it used, so any change in cost or quality can be traced to a prompt version. That log is why every run now prints its cost: output tokens turned out to be more than a third of the bill. It also showed that 252 of 253 gaps between calls were under five minutes, which made prompt caching an easy win.
+
+<Figure
+  src={aiCost}
+  alt="Dashboard chart: AI spend per day over 30 days, with tall bars from 13 to 16 October marked as test runs and about 2 to 3 euros a day afterwards"
+  caption="AI spend per day, about 10 October to 9 November 2026. The tall bars in mid-October are test runs billed to the same account."
+/>
+
+## Things that broke
+
+The most humbling bug was in scheduling. A string comparison between a space and a "T" in two date formats meant every post scheduled for today went out on the very first tick of the day, and a lead time that crossed a daylight-saving switch quietly landed on the wrong day. Five adversarial code reviews, run in parallel, found both.
+
+Others were about failing safely. During one API outage, a whole day of posts was marked as seen before their analysis had actually succeeded, so they were never looked at again. An unavailable model is now its own error, and nothing is marked as seen unless the analysis ran. A filter failed open when its model answer came back wrapped in a code fence: the parse broke and every candidate sailed through. It now fails closed.
+
+Some bugs were plain data plumbing. A field from the geocoder once overwrote the event category on every geocoded post, which quietly broke the rules for big events, timing and the monthly agenda.
+
+The strangest was the football bug. Spanish internet providers block some Cloudflare addresses during league matches, which stopped the site's feed from uploading on match days. The engine now retries hourly through a fallback route.
+
+## Let the numbers decide
+
+For a long time, my view into Tardeo was a private Telegram bot. It pinged me whenever the engine ran a scan and whenever something needed my attention. That worked while there was little to watch, but as the product grew, a stream of messages became hard to control and even harder to understand. So in October 2026 I built my own dashboard: today's plans, the engine's health and AI spend, what is scheduled to go out, and the product analytics, all in one private place.
+
+Engineering choices get benchmarks, so product choices get the same treatment. Every new block on the site ships with counts of how often it is seen and tapped, plus a keep-or-remove rule written before launch, and a private dashboard reminds me to review each one on its date. Those counts come from Tardeo's own anonymous analytics rather than a third-party tracker, built so that measuring the product does not mean collecting customer data.
+
+These are before-and-after tests rather than traffic splits. The site keeps no visitor identifier, so there is nothing to split visitors on, and keeping it that way is part of the point. Instead, each change ships against a baseline and a threshold. "More plans nearby" on plan pages started from 8 opens in 760 views, and it has to reach 2.6% by 26 November or it goes back.
+
+The loop is built to be fast, so testing an idea costs little. Every change is a small pull request that I review, checked locally by Playwright: pixel-exact screenshots on phone and desktop in both themes, link and journey tests in two browser engines, and contrast checks. Every merge is a deploy. Since July, 242 pull requests have gone live, with a median of half an hour from opening one to merging it.
+
+The rules do get used. "Near me" was switched on 7 times in about 3,700 agenda views over 28 days, 0.2%, so I removed it. A "today" summary block got no taps on its links in eleven days. A Telegram join row on plan pages was seen 298 times in a week and tapped zero times, against a rule that asked for at least 15 taps and 5 joins. Both are gone too. Even the dashboard is held to it: on 9 November, seven of its own cards were retired because nobody acted on them.
+
+The numbers also need checking themselves. At one point visits doubled while useful taps stayed flat, and on one day 47 of 156 networks turned out to behave like crawlers. Data-centre traffic is now counted separately, so the growth numbers are much closer to real people.
+
+<Figure
+  src={funnel}
+  alt="Dashboard funnel: 10,413 plan cards seen, 2,174 plan pages viewed and 273 ticket taps, with a table per city"
+  caption="The live funnel, 23 October to 8 November 2026: cards seen, then plan pages, then taps through to tickets, per city."
+/>
+
+## Following people to the web
+
+Telegram was the first channel, and the numbers are what moved the product away from it. Search and AI assistants sent far more people to the website than the channels ever did. The site drew more than 2,000 visits in under a month, and people use it to get to their tickets: between 23 October and 8 November there were 273 taps through to ticket pages.
+
+<Figure
+  src={webDaily}
+  alt="Dashboard chart: daily page views and visits on tardeo.ai from 17 October to 8 November 2026, rising from about 100 to about 300 page views a day"
+  caption="Page views (bars), visits (line) and the 7-day mean, 17 October to 8 November 2026."
+/>
+
+So the effort goes where people actually arrive. The agenda pages carry structured event data for search, every page exists in Spanish and English, and the Telegram channels keep running on autopilot until a review in December. Social posts follow fixed weekly formats that run on their own, and they taught the same lesson: they send few people to the site compared with search and AI assistants. I also closed a community group across the cities after its polls drew almost no votes, and dropped an idea for thin SEO pages in favour of agenda pages with real event data. The site refuses to invent ticket or performer details it does not have.
+
+## A weekly email instead of a channel
+
+The newest piece, just launched, is a weekly email that is set to become the main way to follow Tardeo. You pick one or more cities and confirm by email, and nothing is stored until you click that link. Every Thursday at 10:00 you get the coming weekend's plans for your cities, in your language, ranked by how much people used each venue's plans over the last 28 days. Leaving takes one click.
+
+The sign-up box went live on 3 November and the first email goes out on 12 November, so it is far too early for results. The rules for judging it were written first, as usual. The box stays if it brings at least 3 confirmed sign-ups per 1,000 plan views, and goes if it brings fewer than one, or if taps on tickets and on contacting venues drop by more than 10%. The email gets three sends: it stays if at least 10% of emails lead to a visit and no more than 3% of readers unsubscribe.
+
+## How I build it
+
+I wrote the engine by hand until the end of 2025. Since then I have leaned on coding agents, especially for the front end and design, and for producing short promo videos that announce new features. The engine runs on a small machine I already owned and use for other side projects, which keeps the bill down and keeps things under my control.
+
+The engine follows the same loop as the site. Every change is now a pull request I review, and the full suite of about 5,700 tests, the type check and the build all pass before anything ships. Each deploy is checked against the build it was meant to ship. Riskier behaviour sits behind a flag with three modes: off, shadow and on. In shadow, the engine counts what it would have done and changes nothing. The filter for posts with no event date ran that way from late October: it would have dropped 15 posts, review turned up one case that needed special handling, and the filter was switched on on 8 November. When something does break, the loop is short: on 9 November a duplicate alert was reported, fixed, reviewed and live in under two hours.

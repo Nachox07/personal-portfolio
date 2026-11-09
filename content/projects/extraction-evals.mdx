@@ -1,0 +1,89 @@
+import Gallery from "@/components/case-study/gallery";
+import s05 from "@/public/case-studies/extraction-evals/s05.webp";
+import s06 from "@/public/case-studies/extraction-evals/s06.webp";
+import s20 from "@/public/case-studies/extraction-evals/s20.webp";
+import hero from "@/public/case-studies/extraction-evals/hero.webp";
+
+export const meta = {
+  title: "Extraction evals",
+  summary:
+    "Every prompt change looks like an improvement on the examples that inspired it. This is how I check whether a change to a production LLM pipeline actually helped, and the time the answer was no.",
+  period: "October 2026",
+  role: "Author",
+  status: "ready",
+  stack: ["TypeScript", "Vitest", "Anthropic Claude", "LLM evaluation"],
+  cover: { src: hero, alt: "Six invented posters from the public test set: a concert, a drinks deal, a food photo, an event already over, a children's workshop and a recap announcing the next date" },
+  links: [{ label: "Code and full report", href: "https://github.com/Nachox07/extraction-evals" }],
+};
+
+## The problem with "it looks better"
+
+[Tardeo](/projects/tardeo) publishes a daily agenda of evening plans. A vision model reads what about 70 venues post across four cities and decides, image by image, whether it announces an event and on which day. Code then publishes whatever it finds.
+
+Prompt changes come from me, and sometimes from a coding agent working on the service. Either way, they are hypotheses. Each one fixes the examples that prompted it, and almost every one looks like an improvement when you read a handful of outputs. The question that matters is narrower and harder: **does the change help on posts it was not written for?**
+
+Before this project, that was hard to answer. Changes were judged on a 150-image benchmark that was good at rejecting a weak model and not much else. 102 of its 150 labels were the production model's own answers, so a mistake every model shared could never show up. It ran each model once, so differences of one or two images were noise, and it only covered one kind of post. It could not approve a close model swap or catch a prompt regression.
+
+## An answer key you can trust
+
+The first trap is grading a model with its own homework. If the answer key comes from the model under test, all you measure is agreement.
+
+So the key came from a stronger reference model, Claude Opus 5.5 at high effort, answering every item twice. Anything suspicious came to me: items where its two runs disagreed, where it disagreed with the production model, or where two cheaper models both contradicted it. That was 26 items, and on those my answer always wins. Three verdicts flipped on the first pass and two more on the second.
+
+Then I went after the part of the key nobody had questioned, the items where the models agreed. I labelled 20 of them blind and matched 19, and a model from a second vendor also agreed with the key on 19 of 20. That puts the key at about one error in twenty where the models agree, which in turn tells you how small a difference this study can honestly see.
+
+## Writing the rules before the results
+
+The scoring rule was written down before a single number existed, and changing it means re-scoring every published result. A few choices in it carry most of the weight. One image is one item, and its verdict is a strict majority over runs; a tie counts as "not an event", because publishing a wrong plan is the more expensive mistake. Errors stay in the denominator, so a model cannot score better by failing to answer. Results are scored twice, once on what the model read and once on what would actually be published after the policy that drops events already over. And the day must match exactly, with a missing day counted as wrong.
+
+Above all, misses and false alarms are counted separately, because they cost different things. A miss is a plan nobody hears about. A false alarm is a wrong plan sitting on the agenda.
+
+<Gallery
+  caption="Three of the 20 invented posters in the public test set. Click to enlarge."
+  items={[
+    { src: s05, alt: "Synthetic poster: a cheesecake made every morning", caption: "A food photo with no offer or date: not an event." },
+    { src: s06, alt: "Synthetic poster: a boleros night on a date already past", caption: "An event that is already over: the publish policy catches it." },
+    { src: s20, alt: "Synthetic poster: thanks for coming, next date Sunday 18", caption: "A recap that announces the next date: an event." },
+  ]}
+/>
+
+The rule for shipping a change is just as fixed. A change goes out only if it has **no more publish-level misses** than production, and either **fewer false alarms** or **lower cost with no more false alarms**. It is a rule on counts, not a statistical claim: with about 90 events in 400 items, a difference of one or two is within the flips you see between runs.
+
+## The first result
+
+The test set was 400 images seen between 3 and 12 October 2026: 300 drawn at random from 795 usable images, plus 100 hard cases picked to fill category quotas and from items where models disagreed. Under the key, 91 are events. The production model, Claude Sonnet 5.5 at medium effort, ran each prompt twice per item.
+
+| Prompt | Misses | False alarms | Day right |
+|---|---|---|---|
+| Baseline | 2 | 8 | 83 of 87 |
+| `ab` | 1 | 5 | 86 of 89 |
+| `all` | 5 | 2 | 82 of 85 |
+
+`ab` adds two lines to the prompt. A photo of food, a drink or a menu, or news about a restaurant or shop, is not an event unless it states a deal, a discount or an event. Recap footage is not an event unless it gives a future date, says the plan continues or sells tickets. It shipped. `all` cut false alarms even further, but it missed five events, two of them children's shows, so it was rejected: family plans stay on the agenda.
+
+The pooled numbers hide the part that matters. Item by item, `ab` fixed two misses and six false alarms, and introduced one miss and three false alarms of its own. The entire false-alarm gain came from the hard slice. And `ab`'s two lines had been written from errors in these same 400 images, so the result was in-sample.
+
+## The check that changed the answer
+
+After `ab` shipped, I ran it against 331 new images seen on 14 and 15 October, next to the prompt without it.
+
+| Prompt | Misses (published) | False alarms | Day right |
+|---|---|---|---|
+| `ab` | 2 | 1 | 120 of 122 |
+| Without `ab` | 3 | 1 | 119 of 121 |
+
+**The false-alarm gain did not replicate.** A one-item difference is inside the noise. In hindsight, the held-out run is what the rule should have required before shipping, and now it does.
+
+The same run caught something I was not looking for. A one-line edit to a comment in the output schema on 16 October changed two held-out answers, both for the worse, on a set where only one item in 331 flips between runs. The edit is the most likely cause, and every prompt or schema edit now goes through this check.
+
+None of this replaces judgement. In the held-out set I overturned the reference model on 9 of 15 disagreements, and without that review the production model would have been charged eight misses instead of two. The harness informs the decision; a person still makes it.
+
+## Reading the whole post
+
+The last question was about cost. Some posts carry several images, and the pipeline only read the first. On 121 posts, 28 of them with more than one image, reading every image took publish misses from four to zero, kept false alarms at one and got every day right, for about 65% more spend per post. Strictly, that does not pass the shipping rule: false alarms stayed the same and the cost went up. The rule exists to stop regressions slipping through, not to make every decision, and this one was a deliberate trade of money for fewer missed plans, approved on 16 October. Today the two `ab` lines are in the production prompt and the engine reads up to ten images per post.
+
+## What it cost
+
+The whole study came to about $69 of API spend: roughly $34 for the main set, $25 for the held-out set, $9 for the multi-image check and $1.75 for the second-vendor check. The scorer itself is 215 lines with no I/O, and 23 tests lock the rule in place.
+
+The production prompt and the real images stay private. The repository publishes the scorer, the rule, the full report, a stand-in prompt and 20 invented posters, so anyone can run the method end to end.

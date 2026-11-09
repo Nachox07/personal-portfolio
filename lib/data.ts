@@ -142,7 +142,8 @@ export const projectsData: readonly Project[] = [
       "Cloudflare",
     ],
     imageUrl: tardeo,
-    url: "https://tardeo.ai",
+    url: "https://tardeo.ai/?s=garilleti",
+    caseStudy: "tardeo",
   },
   {
     title: "Extraction evals",
@@ -151,6 +152,7 @@ export const projectsData: readonly Project[] = [
     tags: ["TypeScript", "LLM evaluation", "Vitest", "Anthropic Claude"],
     imageUrl: extractionEvals,
     url: "https://github.com/Nachox07/extraction-evals",
+    caseStudy: "extraction-evals",
   },
   {
     title: "Daylit",
