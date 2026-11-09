@@ -123,6 +123,8 @@ type Project = {
   imageUrl: StaticImageData | string;
   url?: string;
   discontinued?: boolean;
+  // Slug of a case study under content/projects, when one exists.
+  caseStudy?: string;
 };
 
 export const projectsData: readonly Project[] = [
