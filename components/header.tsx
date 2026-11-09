@@ -43,13 +43,12 @@ export default function Header() {
 			>
 				<Link
 					href="/#home"
-					className="flex items-center gap-2 font-mono text-sm text-ink"
+					className="font-mono text-sm font-medium tracking-tight text-ink transition-colors hover:text-accent"
 					onClick={() => {
 						setActiveSection("Home");
 						setTimeOfLastClick(Date.now());
 					}}
 				>
-					<span aria-hidden className="h-2 w-2 rounded-full bg-accent" />
 					garilleti.me
 				</Link>
 
