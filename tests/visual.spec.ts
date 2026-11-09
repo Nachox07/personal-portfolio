@@ -1,5 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 
+// Screenshots show the settled page: scroll-driven reveals have no end time to wait for.
+test.use({ contextOptions: { reducedMotion: "reduce" } });
+
 async function settle(page: Page) {
 	await page.goto("/");
 	await page.evaluate(async () => {

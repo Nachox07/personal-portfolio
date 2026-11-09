@@ -1,6 +1,7 @@
 import Trace from "@/components/case-study/trace";
 import Figure from "@/components/case-study/figure";
 import home from "@/public/case-studies/tardeo/home.webp";
+import card from "@/public/case-studies/tardeo/card.webp";
 import funnel from "@/public/case-studies/tardeo/funnel-28d.webp";
 import webDaily from "@/public/case-studies/tardeo/web-daily-28d.webp";
 import aiCost from "@/public/case-studies/tardeo/ai-cost-daily-30d.webp";
@@ -10,9 +11,16 @@ export const meta = {
   summary:
     "A free daily agenda of evening plans in Málaga, Sevilla, Fuengirola and Marbella. Behind it is an engine that reads what venues post publicly, uses a vision model to turn each post into dated plans, double-checks the result in code and publishes it every day. This is how it works, what broke, and how the numbers keep changing the product.",
   period: "October 2023 — present",
-  role: "Creator",
+  role: "Solo creator",
   status: "ready",
   stack: ["TypeScript", "Node.js", "Claude", "OpenAI (2023–24)", "OpenRouter (benchmarks)", "SQLite", "Astro", "Cloudflare", "Telegram Bot API"],
+  card: {
+    tagline: "A free daily agenda of evening plans in four cities, run by an AI pipeline.",
+    claim: "98.2–98.5%",
+    context: "of 331 held-out images read right, by a model picked from ten on one benchmark",
+    facts: ["242 PRs since July", "~5,700 tests", "€2–3 a day in AI"],
+    image: card,
+  },
   links: [{ label: "tardeo.ai", href: "https://tardeo.ai/?s=garilleti" }],
   cover: { src: home, alt: "The tardeo.ai home page: what to do today in your city, with this week's plan counts for Málaga, Sevilla, Fuengirola and Marbella" },
 };
@@ -23,7 +31,7 @@ Most of the places I love, I found by accident. I cycle and walk around my city 
 
 The alternative is to follow every venue on social media and piece the week together yourself. It is too much noise, too many accounts, and far too much time spent planning something that should feel spontaneous. So I set out to automate it. I choose the venues and promoters worth following, an AI reads what they publish and keeps only the plans that matter, and code checks the result, so planning an evening takes minutes instead of an evening of scrolling.
 
-The cities are simply where I live and travel most, Málaga province and Sevilla. The week I wrote this, Tardeo listed 124 plans in Málaga, 55 in Sevilla, 47 in Fuengirola and 62 in Marbella.
+The cities are simply where I live and travel most, Málaga province and Sevilla. The week I wrote this, Tardeo listed 139 plans in Málaga, 66 in Sevilla, 53 in Fuengirola and 63 in Marbella.
 
 ## From an app to a website
 

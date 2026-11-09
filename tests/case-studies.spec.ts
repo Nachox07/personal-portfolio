@@ -70,3 +70,13 @@ test("a single figure opens without arrows", async ({ page }) => {
 	await page.getByRole("button", { name: "Close image viewer" }).click();
 	await expect(dialog).toBeHidden();
 });
+
+test("opening a case study from the home page starts at the top", async ({ page }) => {
+	await page.goto("/");
+	const card = page.getByRole("link", { name: "Tardeo.ai", exact: true }).first();
+	await card.scrollIntoViewIfNeeded();
+	await card.click();
+	await expect(page).toHaveURL(/\/projects\/tardeo$/);
+	await expect(page.getByRole("link", { name: /All projects/ })).toBeInViewport();
+	await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});

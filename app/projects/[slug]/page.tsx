@@ -32,7 +32,7 @@ export default async function CaseStudyPage({ params }: Props) {
 	const { meta, Content } = study;
 
 	return (
-		<main id="main" className="mx-auto w-full max-w-5xl px-4 pb-24 pt-10 sm:px-8 sm:pt-16">
+		<main id="main" className="mx-auto w-full max-w-5xl scroll-mt-24 px-4 pb-24 pt-10 sm:px-8 sm:pt-16">
 			<Link
 				href="/#projects"
 				className="font-mono text-xs uppercase tracking-[0.12em] text-faint hover:text-accent"
