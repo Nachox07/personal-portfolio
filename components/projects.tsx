@@ -7,9 +7,8 @@ import { isPublished } from "@/lib/case-studies";
 
 // Projects with a published case study are shown as cards in Selected work.
 const others = projectsData.filter((p) => !(p.caseStudy && isPublished(p.caseStudy)));
-// The first few are current work; the rest sit under "Earlier".
-const firstEarlier = others.findIndex((p) => p.discontinued);
-const RECENT = firstEarlier === -1 ? others.length : firstEarlier;
+// The two most relevant stay open; the oldest fold under "Earlier projects".
+const SHOWN = 2;
 
 export default function Projects() {
 	return (
@@ -23,16 +22,25 @@ export default function Projects() {
 				Other projects
 			</SectionHeading>
 			<ol className="border-t border-line">
-				{others.slice(0, RECENT).map((project, index) => (
+				{others.slice(0, SHOWN).map((project, index) => (
 					<Project key={project.title} index={index} {...project} />
 				))}
 			</ol>
-			<h3 className="mono-label mb-0 mt-12 pb-3">Earlier</h3>
-			<ol className="border-t border-line" start={RECENT + 1}>
-				{others.slice(RECENT).map((project, index) => (
-					<Project key={project.title} index={RECENT + index} {...project} />
-				))}
-			</ol>
+			{others.length > SHOWN && (
+				<details className="group/earlier mt-10">
+					<summary className="mono-label inline-flex cursor-pointer list-none items-center gap-2 pb-3 hover:text-ink [&::-webkit-details-marker]:hidden">
+						<span aria-hidden className="inline-block transition-transform group-open/earlier:rotate-90">
+							›
+						</span>
+						Earlier projects ({others.length - SHOWN})
+					</summary>
+					<ol className="border-t border-line" start={SHOWN + 1}>
+						{others.slice(SHOWN).map((project, index) => (
+							<Project key={project.title} index={SHOWN + index} {...project} />
+						))}
+					</ol>
+				</details>
+			)}
 		</InViewSection>
 	);
 }

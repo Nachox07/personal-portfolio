@@ -34,10 +34,10 @@ export default async function CaseStudyPage({ params }: Props) {
 	return (
 		<main id="main" className="mx-auto w-full max-w-5xl scroll-mt-24 px-4 pb-24 pt-10 sm:px-8 sm:pt-16">
 			<Link
-				href="/#projects"
+				href="/#work"
 				className="font-mono text-xs uppercase tracking-[0.12em] text-faint hover:text-accent"
 			>
-				← All projects
+				← All work
 			</Link>
 
 			<header className="mt-8 max-w-3xl">

@@ -14,10 +14,10 @@ export const meta = {
   stack: ["TypeScript", "Vitest", "Anthropic Claude", "OpenRouter", "LLM evaluation"],
   cover: { src: hero, alt: "Six invented posters from the public test set: a concert, a drinks deal, a food photo, an event already over, a children's workshop and a recap announcing the next date" },
   card: {
-    tagline: "How I judge whether a prompt change to a production LLM pipeline helped.",
+    tagline: "How I test whether a prompt change to a production LLM pipeline helped.",
     claim: "Did not replicate",
-    context: "a shipped prompt cut false alarms from 8 to 5, then showed no gain on 331 new images",
-    facts: ["Rule fixed before results", "9 of 15 model calls overturned", "~$69 in total"],
+    context: "false alarms fell from 8 to 5 on the original set, then the gain disappeared on 331 new images",
+    facts: ["Rule fixed before results", "Misses and false alarms apart", "Held-out check now required"],
   },
   links: [{ label: "Code and full report", href: "https://github.com/Nachox07/extraction-evals" }],
 };

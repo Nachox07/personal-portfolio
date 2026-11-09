@@ -21,6 +21,7 @@ export default function Project({
 
 	return (
 		<li
+			data-reveal
 			className={clsx(
 				"group relative grid grid-cols-1 gap-x-8 gap-y-3 border-b border-line py-7 sm:grid-cols-[3rem_1fr_13rem]",
 				linked && "transition-colors hover:bg-surface"

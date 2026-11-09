@@ -15,7 +15,7 @@ export default function Figure({ src, alt, caption }: FigureProps) {
 	const [open, setOpen] = useState<number | null>(null);
 
 	return (
-		<figure className="mt-8">
+		<figure data-reveal className="mt-8">
 			<button
 				type="button"
 				onClick={() => setOpen(0)}
