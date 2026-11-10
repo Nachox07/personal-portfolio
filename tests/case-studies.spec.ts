@@ -80,3 +80,19 @@ test("opening a case study from the home page starts at the top", async ({ page 
 	await expect(page.getByRole("link", { name: /All work/ })).toBeInViewport();
 	await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
 });
+
+test("every page has a share preview with a large image that loads", async ({ page, request }) => {
+	for (const path of ["/", "/projects/tardeo", "/projects/extraction-evals", "/projects/whisperland"]) {
+		await page.goto(path);
+		const meta = (key: string) => page.locator(`meta[property="${key}"], meta[name="${key}"]`).first().getAttribute("content");
+		expect(await meta("twitter:card")).toBe("summary_large_image");
+		expect((await meta("og:description"))?.length ?? 0).toBeLessThanOrEqual(160);
+		for (const key of ["og:image", "twitter:image"]) {
+			const url = new URL((await meta(key)) ?? "");
+			expect(url.origin).toBe("https://www.garilleti.me");
+			const res = await request.get(url.pathname + url.search);
+			expect(res.status()).toBe(200);
+			expect(res.headers()["content-type"]).toBe("image/png");
+		}
+	}
+});

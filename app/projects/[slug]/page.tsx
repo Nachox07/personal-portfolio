@@ -20,7 +20,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	return {
 		title,
 		description: study.meta.summary,
-		openGraph: { title, description: study.meta.summary, type: "article" },
+		// Share previews cut long text off, so they get the card's one-line tagline.
+		openGraph: { title, description: study.meta.card?.tagline ?? study.meta.summary, type: "article", url: `/projects/${slug}` },
+		twitter: { card: "summary_large_image", title, description: study.meta.card?.tagline ?? study.meta.summary },
 		...(study.meta.status === "draft" ? { robots: { index: false } } : {}),
 	};
 }
