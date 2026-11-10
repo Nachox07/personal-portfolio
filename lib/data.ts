@@ -53,7 +53,34 @@ export const experienceData: readonly Experience[] = [
     company: "OpenVPN",
     period: "Nov 2025 — Present",
     description:
-      "Lead a team of 10 across development, QA and DevOps. Build AI agents that retrieve information and call tools, where a person approves any change before it is applied. Built load tests that emulate 110k+ devices and gateways connecting to the backend at once, to benchmark its performance.",
+      "Lead a team of 10 across development, QA and DevOps. Build AI agents that retrieve information and call tools, where a person approves any change before it is applied.",
+    highlights: [
+      {
+        label: "Agent path",
+        detail:
+          "Designed the three-layer path AI agents use to reach the control plane: chat agent, MCP gateway, controller. Internal AI admin tools go through the same gateway and the same permission checks as any external client.",
+      },
+      {
+        label: "Product agent",
+        detail:
+          "Built the product AI agent on LangGraph, with models behind an LLM gateway: tool calling against live infrastructure for member and invite management.",
+      },
+      {
+        label: "Safe writes",
+        detail:
+          "Made-up tool arguments are rejected, and a deduplication key computed outside the tool is passed into it, so a retry or a sub-agent picking up the same job applies the write once.",
+      },
+      {
+        label: "Retrieval",
+        detail:
+          "An internal retrieval system over the platform architecture docs, served through a purpose-built MCP server so engineers query it from their own tools: LlamaIndex, local embeddings, ChromaDB and a severity-labelled evaluation suite.",
+      },
+      {
+        label: "Load tests",
+        detail:
+          "A k6 suite and a five-level load ladder in CI. The top level cleared 100,000 concurrent long-lived gRPC control-plane streams for the first time, peaking at 126,422.",
+      },
+    ],
   },
   {
     role: "Technical Lead Engineer",
