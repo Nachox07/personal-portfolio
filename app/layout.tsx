@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import type { Metadata } from "next";
 import Header from "@/components/header";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import ActiveSectionContextProvider from "@/context/active-section-context";
@@ -17,31 +18,25 @@ const mono = JetBrains_Mono({
 // Set the theme class and saved accent before first paint, so nothing flashes.
 const themeScript = `try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark");var a=localStorage.getItem("accent");if(a&&a!=="teal")document.documentElement.dataset.accent=a}catch(e){}`;
 
-export const metadata = {
-	title: "Nacho González-Garilleti | Personal Portfolio",
-	description:
-		"Nacho González-Garilleti builds AI agents that act on real systems, and helps engineering teams get faster with AI. 9 years in production.",
-	tags: [
-		"Nacho",
-		"González",
-		"Garilleti",
-		"Full-stack",
-		"Engineer",
-		"Portfolio",
-	],
+const description =
+	"Software engineer, 9 years in production. I build AI agents that retrieve information and call tools, with a person approving every change.";
+
+export const metadata: Metadata = {
+	metadataBase: new URL("https://www.garilleti.me"),
+	title: "Nacho González-Garilleti — software engineer, AI agents",
+	description,
 	twitter: {
-		handle: "@nachox07",
+		card: "summary_large_image",
 		site: "@nachox07",
-		cardType: "summary_large_image",
+		creator: "@nachox07",
 	},
 	openGraph: {
 		type: "website",
 		locale: "en_US",
-		url: "https://garilleti.me",
-		title: "Nacho González-Garilleti | Personal Portfolio",
-		description:
-			"Nacho González-Garilleti builds AI agents that act on real systems, and helps engineering teams get faster with AI. 9 years in production.",
-		site_name: "Nacho González-Garilleti | Personal Portfolio",
+		url: "/",
+		title: "Nacho González-Garilleti — software engineer, AI agents",
+		description,
+		siteName: "Nacho González-Garilleti",
 	},
 };
 
