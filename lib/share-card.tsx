@@ -50,10 +50,10 @@ export function shareImage({ label, title, lead, claim, context, facts = [] }: C
 				</div>
 
 				{claim && (
-					<div style={{ display: "flex", alignItems: "baseline", gap: 24 }}>
+					<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
 						<div style={{ display: "flex", flexShrink: 0, whiteSpace: "nowrap", fontSize: 64, color: accent, letterSpacing: -1 }}>{claim}</div>
 						{context && (
-							<div style={{ display: "flex", fontSize: 26, lineHeight: 1.3, color: muted, maxWidth: 640 }}>
+							<div style={{ display: "flex", fontSize: 28, lineHeight: 1.3, color: muted, maxWidth: 1000 }}>
 								{context}
 							</div>
 						)}
@@ -63,10 +63,10 @@ export function shareImage({ label, title, lead, claim, context, facts = [] }: C
 				<div
 					style={{
 						display: "flex",
-						gap: 32,
+						gap: 28,
 						borderTop: `1px solid ${line}`,
 						paddingTop: 24,
-						fontSize: 24,
+						fontSize: 22,
 						color: faint,
 					}}
 				>

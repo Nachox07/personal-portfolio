@@ -16,9 +16,9 @@ export const meta = {
   stack: ["TypeScript", "Node.js", "Claude", "OpenAI (2023–24)", "OpenRouter (benchmarks)", "SQLite", "Astro", "Cloudflare", "Telegram Bot API"],
   card: {
     tagline: "An AI pipeline I built and run, behind a free daily agenda of plans in four cities.",
-    claim: "98.2–98.5%",
-    context: "of 331 held-out images read right; runs differ by about three images",
-    facts: ["Code checks every date", "Reviewed preview before weekend posts", "€2–3 a day in AI"],
+    claim: "~500 plans published a week",
+    context: "from ~1,900 images a week read by a vision model, for under 5 cents of AI per plan",
+    facts: ["Code checks every date", "Model picked by benchmark", "Reviewed preview before weekend posts"],
     image: card,
   },
   links: [{ label: "tardeo.ai", href: "https://tardeo.ai/?s=garilleti" }],
@@ -70,11 +70,11 @@ A person stays in the loop. I can edit any plan from a private dashboard and the
 
 Tardeo is not tied to one vendor. It started on OpenAI models and moved to Claude in July 2024, and the model behind it has changed seven times since the first version. These days every candidate goes through the same benchmark harness, which can run any model through OpenRouter with the exact production prompt and output schema, so a comparison tests the real thing. The most recent switch, in October 2026, was settled that way rather than by gut feeling. On 38 real posters, Claude Sonnet 5.5 at medium effort dated all 40 events correctly for about $7.73 per thousand images, while Haiku was twenty times cheaper and got roughly one post in seven wrong. In a separate run of 150 images across ten models from several vendors, Sonnet 5.5 was the only one that missed no events at all. The switching rule is written down now: a new model may not miss more events than the current one, and accuracy wins every tie. Cheap models still have a place, but they have to earn it: when Haiku broke a rule in its own prompt on some gating calls, those calls went back to Sonnet.
 
-That first benchmark had a flaw I only saw later: many of its labels were the production model's own answers, so a mistake every model shared could never show up. The current one uses an answer key from a stronger model, with every disagreement reviewed by me, and a scoring rule fixed before any results. On 331 held-out images the production setup gets 98.2–98.5% right, and the noise between runs is about three images, so a change of one or two is not a result.
+That first benchmark had a flaw I only saw later: many of its labels were the production model's own answers, so a mistake every model shared could never show up. The current one uses an answer key from a stronger model, with every disagreement reviewed by me, and a scoring rule fixed before any results. In October, on 331 held-out images, the production setup got 98.2–98.5% right, and the noise between runs was about three images, so a change of one or two is not a result. That set has since become too easy to tell close models apart, so a harder one is replacing it.
 
 Small inputs matter too. In an A/B test on 489 posts, with two arms that differed only in whether the venue's own text went along with the image, the arm with the text got 45 more decisions right and 72 more posts fully right, for about a third more cost per post. It shipped. How a prompt change gets judged is a story of its own, told in [Extraction evals](/projects/extraction-evals).
 
-Reading every plan with a vision model costs about €2–3 a day; the first nine days of November 2026 came to €20.23. Every analysis logs a hash of the prompt, the model and the tokens it used, so any change in cost or quality can be traced to a prompt version. That log is why every run now prints its cost: output tokens turned out to be more than a third of the bill. It also showed that 252 of 253 gaps between calls were under five minutes, which made prompt caching an easy win.
+Reading every plan with a vision model costs about €2–3 a day; the first nine days of November 2026 came to €20.23. Over the two weeks from 27 October to 9 November it read 3,884 images and published 1,018 new plans, under 5 cents of AI per plan. Every analysis logs a hash of the prompt, the model and the tokens it used, so any change in cost or quality can be traced to a prompt version. That log is why every run now prints its cost: output tokens turned out to be more than a third of the bill. It also showed that 252 of 253 gaps between calls were under five minutes, which made prompt caching an easy win.
 
 <Figure
   src={aiCost}
