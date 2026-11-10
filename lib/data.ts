@@ -63,7 +63,7 @@ export const experienceData: readonly Experience[] = [
       {
         label: "Product agent",
         detail:
-          "Built the product AI agent on LangGraph and Vertex AI: tool calling against live infrastructure for member and invite management.",
+          "Built the product AI agent on LangGraph, with models behind an LLM gateway: tool calling against live infrastructure for member and invite management.",
       },
       {
         label: "Safe writes",
